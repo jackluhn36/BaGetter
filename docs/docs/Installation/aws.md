@@ -67,10 +67,10 @@ For example:
   "Storage": {
     "Type": "AwsS3",
     "ServiceUrl": "http://localhost:9000",
+    "ForcePathStyle": true,
     "Bucket": "nuget-packages",
     "AccessKey": "minioadmin",
-    "SecretKey": "minioadmin",
-    "ForcePathStyle": true
+    "SecretKey": "minioadmin"
   }
   // ...
 }
