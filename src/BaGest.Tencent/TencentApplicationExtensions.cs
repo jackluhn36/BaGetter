@@ -21,10 +21,10 @@ public static class TencentApplicationExtensions
             return new TencentCosClient(options);
         });
 
-        app.Services.AddProvider<IStorageService?>((provider, config) =>
+        app.Services.AddProvider<IStorageService>((provider, config) =>
         {
             if (!config.HasStorageType("TencentCos"))
-                return null;
+                return new NullStorageService();
 
             return provider.GetRequiredService<TencentStorageService>();
         });
