@@ -32,9 +32,9 @@ public sealed record PackageDeprecationDetails
 
     private PackageDeprecationDetails(
         PackageDeprecationReasons reasons,
-        string message,
-        string alternatePackageId,
-        string alternatePackageVersionRange)
+        string? message,
+        string? alternatePackageId,
+        string? alternatePackageVersionRange)
     {
         Reasons = reasons;
         Message = message;
@@ -50,17 +50,17 @@ public sealed record PackageDeprecationDetails
     /// <summary>
     /// Additional details about the deprecation, or null.
     /// </summary>
-    public string Message { get; }
+    public string? Message { get; }
 
     /// <summary>
     /// The id of the package that should be used instead, or null.
     /// </summary>
-    public string AlternatePackageId { get; }
+    public string? AlternatePackageId { get; }
 
     /// <summary>
     /// The normalized version range of the alternate package, or null if any version is allowed.
     /// </summary>
-    public string AlternatePackageVersionRange { get; }
+    public string? AlternatePackageVersionRange { get; }
 
     /// <summary>
     /// Validate the raw input of a deprecation and create its details.
@@ -76,11 +76,11 @@ public sealed record PackageDeprecationDetails
     /// <returns>Whether the input is valid.</returns>
     public static bool TryCreate(
         IEnumerable<string> reasons,
-        string message,
-        string alternatePackageId,
-        string alternatePackageVersionRange,
-        out PackageDeprecationDetails details,
-        out string error)
+        string? message,
+        string? alternatePackageId,
+        string? alternatePackageVersionRange,
+        out PackageDeprecationDetails? details,
+        out string? error)
     {
         details = null;
 
@@ -153,7 +153,7 @@ public sealed record PackageDeprecationDetails
         return true;
     }
 
-    private static bool TryNormalizeVersionRange(string input, out string normalized)
+    private static bool TryNormalizeVersionRange(string? input, out string? normalized)
     {
         normalized = null;
 
@@ -195,6 +195,6 @@ public sealed record PackageDeprecationDetails
         return comparison < 0 || (comparison == 0 && range.IsMinInclusive && range.IsMaxInclusive);
     }
 
-    private static string NullIfWhiteSpace(string value)
+    private static string? NullIfWhiteSpace(string? value)
         => string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 }

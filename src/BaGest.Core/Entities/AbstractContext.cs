@@ -1,7 +1,9 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BaGest.Core;
 
@@ -72,28 +74,36 @@ public abstract class AbstractContext<TContext> : DbContext, IContext where TCon
 
         package.Property(p => p.Authors)
             .HasMaxLength(DefaultMaxStringLength)
-            .HasConversion(StringArrayToJsonConverter.Instance)
+            .HasConversion((ValueConverter)StringArrayToJsonConverter.Instance)
             .Metadata.SetValueComparer(StringArrayComparer.Instance);
 
         package.Property(p => p.IconUrl)
-            .HasConversion(UriToStringConverter.Instance)
+            .HasConversion(
+                uri => uri == null ? null : uri.AbsoluteUri,
+                value => value == null ? null : new Uri(value, UriKind.RelativeOrAbsolute))
             .HasMaxLength(DefaultMaxStringLength);
 
         package.Property(p => p.LicenseUrl)
-            .HasConversion(UriToStringConverter.Instance)
+            .HasConversion(
+                uri => uri == null ? null : uri.AbsoluteUri,
+                value => value == null ? null : new Uri(value, UriKind.RelativeOrAbsolute))
             .HasMaxLength(DefaultMaxStringLength);
 
         package.Property(p => p.ProjectUrl)
-            .HasConversion(UriToStringConverter.Instance)
+            .HasConversion(
+                uri => uri == null ? null : uri.AbsoluteUri,
+                value => value == null ? null : new Uri(value, UriKind.RelativeOrAbsolute))
             .HasMaxLength(DefaultMaxStringLength);
 
         package.Property(p => p.RepositoryUrl)
-            .HasConversion(UriToStringConverter.Instance)
+            .HasConversion(
+                uri => uri == null ? null : uri.AbsoluteUri,
+                value => value == null ? null : new Uri(value, UriKind.RelativeOrAbsolute))
             .HasMaxLength(DefaultMaxStringLength);
 
         package.Property(p => p.Tags)
             .HasMaxLength(DefaultMaxStringLength)
-            .HasConversion(StringArrayToJsonConverter.Instance)
+            .HasConversion((ValueConverter)StringArrayToJsonConverter.Instance)
             .Metadata.SetValueComparer(StringArrayComparer.Instance);
 
         package.Property(p => p.Description).HasMaxLength(DefaultMaxStringLength);

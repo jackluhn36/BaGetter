@@ -30,8 +30,8 @@ public class Package
         }
     }
 
-    public string[] Authors { get; set; }
-    public string Description { get; set; }
+    public string[] Authors { get; set; } = Array.Empty<string>();
+    public string Description { get; set; } = string.Empty;
     public long Downloads { get; set; }
     public bool HasReadme { get; set; }
     public bool HasEmbeddedIcon { get; set; }
@@ -44,8 +44,8 @@ public class Package
     public DateTime Published { get; set; }
     public bool RequireLicenseAcceptance { get; set; }
     public SemVerLevel SemVerLevel { get; set; }
-    public string Summary { get; set; }
-    public string Title { get; set; }
+    public string Summary { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
 
     public Uri? IconUrl { get; set; }
     public Uri? LicenseUrl { get; set; }
@@ -64,29 +64,29 @@ public class Package
     /// <summary>
     /// Additional details about the deprecation.
     /// </summary>
-    public string DeprecationMessage { get; set; }
+    public string? DeprecationMessage { get; set; }
 
     /// <summary>
     /// The id of the package that should be used instead of this deprecated package.
     /// </summary>
-    public string DeprecationAlternatePackageId { get; set; }
+    public string? DeprecationAlternatePackageId { get; set; }
 
     /// <summary>
     /// The version range of the alternate package, or null if any version is allowed.
     /// </summary>
-    public string DeprecationAlternatePackageVersionRange { get; set; }
+    public string? DeprecationAlternatePackageVersionRange { get; set; }
 
     /// <summary>
     /// Used for optimistic concurrency.
     /// </summary>
-    public byte[] RowVersion { get; set; }
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 
-    public List<PackageDependency> Dependencies { get; set; }
-    public List<PackageType> PackageTypes { get; set; }
-    public List<TargetFramework> TargetFrameworks { get; set; }
+    public List<PackageDependency> Dependencies { get; set; } = new List<PackageDependency>();
+    public List<PackageType> PackageTypes { get; set; } = new List<PackageType>();
+    public List<TargetFramework> TargetFrameworks { get; set; } = new List<TargetFramework>();
 
-    public string NormalizedVersionString { get; set; }
-    public string OriginalVersionString { get; set; }
+    public string NormalizedVersionString { get; set; } = string.Empty;
+    public string? OriginalVersionString { get; set; }
 
 
     public string IconUrlString => IconUrl?.AbsoluteUri ?? string.Empty;

@@ -29,7 +29,7 @@ public sealed class PackageMirrorLock
 
         var key = $"{id}/{version.ToNormalizedString()}".ToLowerInvariant();
 
-        Entry entry;
+        Entry? entry;
         lock (_entries)
         {
             if (!_entries.TryGetValue(key, out entry))

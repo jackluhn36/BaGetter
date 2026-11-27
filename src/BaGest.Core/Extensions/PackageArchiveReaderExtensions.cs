@@ -102,7 +102,7 @@ public static class PackageArchiveReaderExtensions
         return SemVerLevel.Unknown;
     }
 
-    private static Uri ParseUri(string uriString)
+    private static Uri? ParseUri(string uriString)
     {
         if (string.IsNullOrEmpty(uriString)) return null;
 

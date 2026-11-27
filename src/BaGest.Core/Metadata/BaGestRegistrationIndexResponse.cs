@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using BaGest.Protocol.Models;
@@ -16,7 +17,7 @@ public class BaGestRegistrationIndexResponse : RegistrationIndexResponse
     /// <remarks>This was modified to use BaGest's extended registration index page model.</remarks>
     [JsonPropertyName("items")]
     [JsonPropertyOrder(int.MaxValue)]
-    public new IReadOnlyList<BaGestRegistrationIndexPage> Pages { get; set; }
+    public new IReadOnlyList<BaGestRegistrationIndexPage> Pages { get; set; } = Array.Empty<BaGestRegistrationIndexPage>();
 
     /// <summary>
     /// The package's total downloads across all versions.

@@ -119,16 +119,16 @@ public static partial class DependencyInjectionExtensions
 
     private static void AddDefaultProviders(this IServiceCollection services)
     {
-        services.AddProvider((provider, configuration) =>
+        services.AddProvider<ISearchService>((provider, configuration) =>
         {
-            if (!configuration.HasSearchType("null")) return null;
+            if (!configuration.HasSearchType("null")) return null!;
 
             return provider.GetRequiredService<NullSearchService>();
         });
 
-        services.AddProvider((provider, configuration) =>
+        services.AddProvider<ISearchIndexer>((provider, configuration) =>
         {
-            if (!configuration.HasSearchType("null")) return null;
+            if (!configuration.HasSearchType("null")) return null!;
 
             return provider.GetRequiredService<NullSearchIndexer>();
         });
@@ -145,7 +145,7 @@ public static partial class DependencyInjectionExtensions
                 return provider.GetRequiredService<NullStorageService>();
             }
 
-            return null;
+            return provider.GetRequiredService<NullStorageService>();
         });
     }
 
