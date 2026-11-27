@@ -88,7 +88,7 @@ public class SqliteContext : AbstractContext<SqliteContext>
     /// Gets the validated, upper-cased value of the Database::JournalMode config, or null if it is not set.
     /// </summary>
     /// <exception cref="InvalidOperationException">The configured journal mode is not supported by SQLite.</exception>
-    private string GetConfiguredJournalMode()
+    private string? GetConfiguredJournalMode()
     {
         if (string.IsNullOrWhiteSpace(_bagestOptions.JournalMode)) return null;
 
