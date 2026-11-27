@@ -15,5 +15,5 @@ public class BaGetRegistrationIndexPageItem : RegistrationIndexPageItem
     /// <remarks>This was modified to use BaGest's extended package metadata model.</remarks>
     [JsonPropertyName("catalogEntry")]
     [JsonPropertyOrder(int.MaxValue)]
-    public new BaGestPackageMetadata PackageMetadata { get; set; }
+    public new BaGestPackageMetadata? PackageMetadata { get; set; }
 }

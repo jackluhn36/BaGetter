@@ -18,7 +18,7 @@ public interface IPackageMetadataService
     /// <param name="packageId">The package's ID.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package's <see cref="BaGestRegistrationIndexResponse">registration index</see>, or <see langword="null"/> if the package does not exist.</returns>
-    public Task<BaGestRegistrationIndexResponse> GetRegistrationIndexOrNullAsync(string packageId, CancellationToken cancellationToken = default);
+    public Task<BaGestRegistrationIndexResponse?> GetRegistrationIndexOrNullAsync(string packageId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the metadata for a single package version, if the package exists.
@@ -27,5 +27,5 @@ public interface IPackageMetadataService
     /// <param name="packageVersion">The package's version.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The <see cref="RegistrationLeafResponse">registration leaf</see>, or <see langword="null"/> if the package does not exist.</returns>
-    public Task<RegistrationLeafResponse> GetRegistrationLeafOrNullAsync(string packageId, NuGetVersion packageVersion, CancellationToken cancellationToken = default);
+    public Task<RegistrationLeafResponse?> GetRegistrationLeafOrNullAsync(string packageId, NuGetVersion packageVersion, CancellationToken cancellationToken = default);
 }

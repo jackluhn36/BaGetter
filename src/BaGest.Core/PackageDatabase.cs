@@ -71,7 +71,7 @@ public class PackageDatabase : IPackageDatabase
         return (await query.AsSingleQuery().ToListAsync(cancellationToken)).AsReadOnly();
     }
 
-    public Task<Package> FindOrNullAsync(
+    public Task<Package?> FindOrNullAsync(
         string id,
         NuGetVersion version,
         bool includeUnlisted,

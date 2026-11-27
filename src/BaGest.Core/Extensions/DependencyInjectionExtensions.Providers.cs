@@ -41,7 +41,7 @@ public static partial class DependencyInjectionExtensions
     /// <returns>Whether the database type is active.</returns>
     public static bool HasDatabaseType(this IConfiguration config, string value)
     {
-        return config[DatabaseTypeKey].Equals(value, StringComparison.OrdinalIgnoreCase);
+        return string.Equals(config[DatabaseTypeKey], value, StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public static partial class DependencyInjectionExtensions
     /// <returns>Whether the search type is active.</returns>
     public static bool HasSearchType(this IConfiguration config, string value)
     {
-        return config[SearchTypeKey].Equals(value, StringComparison.OrdinalIgnoreCase);
+        return string.Equals(config[SearchTypeKey], value, StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public static partial class DependencyInjectionExtensions
     /// <returns>Whether the database type is active.</returns>
     public static bool HasStorageType(this IConfiguration config, string value)
     {
-        return config[StorageTypeKey].Equals(value, StringComparison.OrdinalIgnoreCase);
+        return string.Equals(config[StorageTypeKey], value, StringComparison.OrdinalIgnoreCase);
     }
 
     public static IServiceCollection AddBaGetDbContextProvider<TContext>(
@@ -78,30 +78,30 @@ public static partial class DependencyInjectionExtensions
 
         services.AddProvider<IContext>((provider, config) =>
         {
-            if (!config.HasDatabaseType(databaseType)) return null;
+            if (!config.HasDatabaseType(databaseType)) return null!;
 
             return provider.GetRequiredService<TContext>();
         });
 
         services.AddProvider<IPackageDatabase>((provider, config) =>
         {
-            if (!config.HasDatabaseType(databaseType)) return null;
+            if (!config.HasDatabaseType(databaseType)) return null!;
 
             return provider.GetRequiredService<PackageDatabase>();
         });
 
         services.AddProvider<ISearchIndexer>((provider, config) =>
         {
-            if (!config.HasSearchType(DatabaseSearchType)) return null;
-            if (!config.HasDatabaseType(databaseType)) return null;
+            if (!config.HasSearchType(DatabaseSearchType)) return null!;
+            if (!config.HasDatabaseType(databaseType)) return null!;
 
             return provider.GetRequiredService<NullSearchIndexer>();
         });
 
         services.AddProvider<ISearchService>((provider, config) =>
         {
-            if (!config.HasSearchType(DatabaseSearchType)) return null;
-            if (!config.HasDatabaseType(databaseType)) return null;
+            if (!config.HasSearchType(DatabaseSearchType)) return null!;
+            if (!config.HasDatabaseType(databaseType)) return null!;
 
             return provider.GetRequiredService<DatabaseSearchService>();
         });
@@ -118,7 +118,7 @@ public static partial class DependencyInjectionExtensions
     /// <typeparam name="TService">The service that will be resolved using providers.</typeparam>
     /// <param name="services">The dependency injection container.</param>
     /// <returns>An instance of the service created by the providers.</returns>
-    public static TService GetServiceFromProviders<TService>(IServiceProvider services)
+    public static TService? GetServiceFromProviders<TService>(IServiceProvider services)
         where TService : class
     {
         // Run through all the providers for the type. Find the first provider that returns a non-null result.

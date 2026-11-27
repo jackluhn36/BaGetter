@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using BaGest.Protocol.Models;
@@ -20,17 +21,17 @@ public class BaGestPackageMetadata : PackageMetadata
     public bool HasReadme { get; set; }
 
     [JsonPropertyName("packageTypes")]
-    public IReadOnlyList<string> PackageTypes { get; set; }
+    public IReadOnlyList<string> PackageTypes { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// The package's release notes.
     /// </summary>
     [JsonPropertyName("releaseNotes")]
-    public string ReleaseNotes { get; set; }
+    public string? ReleaseNotes { get; set; }
 
     [JsonPropertyName("repositoryUrl")]
-    public string RepositoryUrl { get; set; }
+    public string? RepositoryUrl { get; set; }
 
     [JsonPropertyName("repositoryType")]
-    public string RepositoryType { get; set; }
+    public string? RepositoryType { get; set; }
 }

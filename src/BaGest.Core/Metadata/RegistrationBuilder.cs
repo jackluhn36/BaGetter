@@ -97,7 +97,7 @@ public class RegistrationBuilder
             },
         };
 
-    private static PackageDeprecation ToDeprecationOrNull(Package package)
+    private static PackageDeprecation? ToDeprecationOrNull(Package package)
     {
         if (!package.IsDeprecated)
         {

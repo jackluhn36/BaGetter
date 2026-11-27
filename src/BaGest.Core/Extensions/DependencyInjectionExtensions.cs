@@ -177,7 +177,7 @@ public static partial class DependencyInjectionExtensions
     {
         var options = provider.GetRequiredService<IOptions<MirrorOptions>>().Value;
 
-        var assembly = Assembly.GetEntryAssembly();
+        var assembly = Assembly.GetExecutingAssembly();
         var assemblyName = assembly.GetName().Name;
         var assemblyVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "0.0.0";
 

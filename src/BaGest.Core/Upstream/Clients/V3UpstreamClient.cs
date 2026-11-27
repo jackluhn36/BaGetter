@@ -31,7 +31,7 @@ public class V3UpstreamClient : IUpstreamClient
     }
     public string GetServiceIndexUrl() => _client.ServiceIndexUrl;
 
-    public async Task<Stream> DownloadPackageOrNullAsync(
+    public async Task<Stream?> DownloadPackageOrNullAsync(
         string id,
         NuGetVersion version,
         CancellationToken cancellationToken)
@@ -121,7 +121,7 @@ public class V3UpstreamClient : IUpstreamClient
         };
     }
 
-    private static Uri ParseUri(string uriString)
+    private static Uri? ParseUri(string uriString)
     {
         if (uriString == null) return null;
 
@@ -157,7 +157,7 @@ public class V3UpstreamClient : IUpstreamClient
 
     private List<PackageDependency> ToDependencies(PackageMetadata package)
     {
-        if ((package.DependencyGroups?.Count ?? 0) == 0)
+        if (package.DependencyGroups == null || package.DependencyGroups.Count == 0)
         {
             return new List<PackageDependency>();
         }
@@ -171,7 +171,7 @@ public class V3UpstreamClient : IUpstreamClient
     {
         // BaGest stores a dependency group with no dependencies as a package dependency
         // with no package id nor package version.
-        if ((group.Dependencies?.Count ?? 0) == 0)
+        if (group.Dependencies == null || group.Dependencies.Count == 0)
         {
             return new[]
             {

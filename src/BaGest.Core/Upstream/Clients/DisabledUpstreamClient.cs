@@ -24,15 +24,15 @@ public class DisabledUpstreamClient : IUpstreamClient
         return Task.FromResult(_emptyPackageList);
     }
 
-    public Task<Stream> DownloadPackageOrNullAsync(
+    public Task<Stream?> DownloadPackageOrNullAsync(
         string id,
         NuGetVersion version,
         CancellationToken cancellationToken)
     {
-        return Task.FromResult<Stream>(null);
+        return Task.FromResult<Stream?>(null);
     }
 
-    public string GetServiceIndexUrl()
+    public string? GetServiceIndexUrl()
     {
         return null;
     }

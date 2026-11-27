@@ -101,7 +101,7 @@ public class SymbolIndexingService : ISymbolIndexingService
             // Ensure there are no unexpected file extensions within the symbol package.
             if (!AreSymbolFilesValid(files))
             {
-                return null;
+                return Array.Empty<string>();
             }
 
             return files.Where(p => Path.GetExtension(p) == ".pdb").ToList();
@@ -110,7 +110,7 @@ public class SymbolIndexingService : ISymbolIndexingService
         {
             // TODO: ValidatePackageEntries throws PackagingException.
             // Add better logging.
-            return null;
+            return Array.Empty<string>();
         }
     }
 
@@ -144,13 +144,14 @@ public class SymbolIndexingService : ISymbolIndexingService
             using var rawPdbStream = await symbolPackage.GetStreamAsync(pdbPath, cancellationToken);
             pdbStream = await rawPdbStream.AsTemporaryFileStreamAsync(cancellationToken);
 
-            string signature;
+            var signature = string.Empty;
             using (var pdbReaderProvider = MetadataReaderProvider.FromPortablePdbStream(pdbStream, MetadataStreamOptions.LeaveOpen))
             {
                 var reader = pdbReaderProvider.GetMetadataReader();
-                var id = new BlobContentId(reader.DebugMetadataHeader.Id);
-
-                signature = id.Guid.ToString("N").ToUpperInvariant();
+                if (reader.DebugMetadataHeader != null)
+                {
+                    signature = new BlobContentId(reader.DebugMetadataHeader.Id).Guid.ToString("N").ToUpperInvariant();
+                }
             }
 
             var fileName = Path.GetFileName(pdbPath).ToLowerInvariant();

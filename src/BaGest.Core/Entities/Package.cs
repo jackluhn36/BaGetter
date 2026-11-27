@@ -11,7 +11,7 @@ public class Package
 {
     public int Key { get; set; }
 
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     public NuGetVersion Version
     {
@@ -36,25 +36,25 @@ public class Package
     public bool HasReadme { get; set; }
     public bool HasEmbeddedIcon { get; set; }
     public bool IsPrerelease { get; set; }
-    public string CachedFrom { get; set; }
-    public string ReleaseNotes { get; set; }
-    public string Language { get; set; }
+    public string? CachedFrom { get; set; }
+    public string? ReleaseNotes { get; set; }
+    public string? Language { get; set; }
     public bool Listed { get; set; }
-    public string MinClientVersion { get; set; }
+    public string? MinClientVersion { get; set; }
     public DateTime Published { get; set; }
     public bool RequireLicenseAcceptance { get; set; }
     public SemVerLevel SemVerLevel { get; set; }
     public string Summary { get; set; }
     public string Title { get; set; }
 
-    public Uri IconUrl { get; set; }
-    public Uri LicenseUrl { get; set; }
-    public Uri ProjectUrl { get; set; }
+    public Uri? IconUrl { get; set; }
+    public Uri? LicenseUrl { get; set; }
+    public Uri? ProjectUrl { get; set; }
 
-    public Uri RepositoryUrl { get; set; }
-    public string RepositoryType { get; set; }
+    public Uri? RepositoryUrl { get; set; }
+    public string? RepositoryType { get; set; }
 
-    public string[] Tags { get; set; }
+    public string[]? Tags { get; set; }
 
     /// <summary>
     /// Why this package version is deprecated, or <see cref="PackageDeprecationReasons.None"/>.

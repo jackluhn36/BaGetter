@@ -55,7 +55,7 @@ public interface IPackageIndexingService
     /// <param name="cacheFeedUrl">The url of the feed the package has been cached from in case of pull through caching, else null.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The result of the attempted indexing operation.</returns>
-    public Task<PackageIndexingResult> IndexAsync(Stream stream, string cacheFeedUrl = null, CancellationToken cancellationToken = default);
+    public Task<PackageIndexingResult> IndexAsync(Stream stream, string? cacheFeedUrl = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Attempt to index a new package.

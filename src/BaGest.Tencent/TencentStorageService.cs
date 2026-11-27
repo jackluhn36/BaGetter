@@ -26,7 +26,7 @@ public class TencentStorageService : IStorageService
         _cosClient.BucketClient.DeleteDir(path);
     }
 
-    public async Task<Stream> GetAsync(string path, CancellationToken cancellationToken = default)
+    public async Task<Stream?> GetAsync(string path, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(path);
 
@@ -40,7 +40,7 @@ public class TencentStorageService : IStorageService
         return new MemoryStream(bytes);
     }
 
-    public async Task<Uri> GetDownloadUriAsync(string path, CancellationToken cancellationToken = default)
+    public async Task<Uri?> GetDownloadUriAsync(string path, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(path);
 

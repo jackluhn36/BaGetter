@@ -159,8 +159,8 @@ public class DatabaseSearchService : ISearchService
         IQueryable<Package> query,
         bool includePrerelease,
         bool includeSemVer2,
-        string packageType,
-        IReadOnlyList<string> frameworks)
+        string? packageType,
+        IReadOnlyList<string>? frameworks)
     {
         if (!includePrerelease)
         {
@@ -187,7 +187,7 @@ public class DatabaseSearchService : ISearchService
 
     private IReadOnlyList<string> GetCompatibleFrameworksOrNull(string framework)
     {
-        if (framework == null) return null;
+        if (framework == null) return Array.Empty<string>();
 
         return _frameworks.FindAllCompatibleFrameworks(framework);
     }

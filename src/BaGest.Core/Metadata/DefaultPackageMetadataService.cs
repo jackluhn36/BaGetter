@@ -23,7 +23,7 @@ public class DefaultPackageMetadataService : IPackageMetadataService
     }
 
     /// <inheritdoc/>
-    public async Task<BaGestRegistrationIndexResponse> GetRegistrationIndexOrNullAsync(string packageId, CancellationToken cancellationToken = default)
+    public async Task<BaGestRegistrationIndexResponse?> GetRegistrationIndexOrNullAsync(string packageId, CancellationToken cancellationToken = default)
     {
         var packages = await _packages.FindPackagesAsync(packageId, cancellationToken);
         if (!packages.Any())
@@ -38,7 +38,7 @@ public class DefaultPackageMetadataService : IPackageMetadataService
     }
 
     /// <inheritdoc/>
-    public async Task<RegistrationLeafResponse> GetRegistrationLeafOrNullAsync(string id, NuGetVersion version, CancellationToken cancellationToken = default)
+    public async Task<RegistrationLeafResponse?> GetRegistrationLeafOrNullAsync(string id, NuGetVersion version, CancellationToken cancellationToken = default)
     {
         var package = await _packages.FindPackageOrNullAsync(id, version, cancellationToken);
         if (package == null)

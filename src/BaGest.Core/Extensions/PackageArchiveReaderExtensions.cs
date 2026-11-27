@@ -149,7 +149,7 @@ public static class PackageArchiveReaderExtensions
         return tags.Split(' ', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private static (Uri repositoryUrl, string repositoryType) GetRepositoryMetadata(NuspecReader nuspec)
+    private static (Uri? repositoryUrl, string? repositoryType) GetRepositoryMetadata(NuspecReader nuspec)
     {
         var repository = nuspec.GetRepositoryMetadata();
 

@@ -91,7 +91,7 @@ public class PackageDeletionService : IPackageDeletionService
         return found;
     }
 
-    private static IList<NuGetVersion> GetValidVersions<S, T>(IEnumerable<NuGetVersion> versions, Func<NuGetVersion, S> getParent, Func<NuGetVersion,T> getSelector, int versionsToKeep)
+    private static List<NuGetVersion> GetValidVersions<S, T>(IEnumerable<NuGetVersion> versions, Func<NuGetVersion, S> getParent, Func<NuGetVersion,T> getSelector, int versionsToKeep)
             where S : IComparable<S>, IEquatable<S>
             where T : IComparable<T>, IEquatable<T>
     {
@@ -208,7 +208,7 @@ public class PackageDeletionService : IPackageDeletionService
 
                     preReleaseValidVersions.UnionWith(
                         GetValidVersions(preReleaseVersions,
-                            v => (v.Major, v.Minor, v.Patch), v => GetPreReleaseBuild(v).Value, (int)maxPrereleaseVersions));
+                            v => (v.Major, v.Minor, v.Patch), v => GetPreReleaseBuild(v)!.Value, (int)maxPrereleaseVersions));
                 }
             }
 

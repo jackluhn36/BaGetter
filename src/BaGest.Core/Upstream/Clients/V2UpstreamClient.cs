@@ -110,7 +110,7 @@ public class V2UpstreamClient : IUpstreamClient, IDisposable
         }
     }
 
-    public async Task<Stream> DownloadPackageOrNullAsync(
+    public async Task<Stream?> DownloadPackageOrNullAsync(
         string id,
         NuGetVersion version,
         CancellationToken cancellationToken)
@@ -206,7 +206,7 @@ public class V2UpstreamClient : IUpstreamClient, IDisposable
 
         // BaGest stores a dependency group with no dependencies as a package dependency
         // with no package id nor package version.
-        if ((group.Packages?.Count() ?? 0) == 0)
+        if (group.Packages == null || !group.Packages.Any())
         {
             return new[]
             {
@@ -222,7 +222,7 @@ public class V2UpstreamClient : IUpstreamClient, IDisposable
         return group.Packages.Select(d => new PackageDependency
         {
             Id = d.Id,
-            VersionRange = d.VersionRange?.ToString(),
+            VersionRange = d.VersionRange.ToString(),
             TargetFramework = framework,
         });
     }

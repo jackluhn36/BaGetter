@@ -45,11 +45,11 @@ public interface IUpstreamClient
     /// The package stream or null if the package cannot be found.
     /// The stream is guaranteed to be seekable if not not null.
     /// </returns>
-    public Task<Stream> DownloadPackageOrNullAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream?> DownloadPackageOrNullAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Get the service index url from the upstream package source.
     /// </summary>
     /// <returns>The service index url as a string</returns>
-    public string GetServiceIndexUrl();
+    public string? GetServiceIndexUrl();
 }

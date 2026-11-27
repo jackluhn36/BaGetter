@@ -49,14 +49,15 @@ public class PackageDownloadsJsonSource : IPackageDownloadsSource
                 {
                     // TODO: This line reads the entire document into memory...
                     var record = JToken.ReadFrom(jsonReader);
-                    var id = string.Intern(record[0].ToString().ToLowerInvariant());
 
-                    // The second entry in each record should be an array of versions, if not move on to next entry.
-                    // This is a check to safe guard against invalid entries.
-                    if (record.Count() == 2 && record[1].Type != JTokenType.Array)
+                    // The first entry should be the package id and the second entry should be an array of versions.
+                    // This check protects against invalid entries.
+                    if (record is not JArray array || array.Count != 2 || array[1] is not JArray)
                     {
                         continue;
                     }
+
+                    var id = string.Intern(array[0].ToString().ToLowerInvariant());
 
                     if (!results.TryGetValue(id, out var value))
                     {
@@ -68,8 +69,14 @@ public class PackageDownloadsJsonSource : IPackageDownloadsSource
                     {
                         if (token != null && token.Count() == 2)
                         {
-                            var version = string.Intern(NuGetVersion.Parse(token[0].ToString()).ToNormalizedString().ToLowerInvariant());
-                            var downloads = token[1].ToObject<int>();
+                            var versionString = token[0]?.ToString();
+                            if (versionString is null)
+                            {
+                                continue;
+                            }
+
+                            var version = string.Intern(NuGetVersion.Parse(versionString).ToNormalizedString().ToLowerInvariant());
+                            var downloads = token[1]?.ToObject<long>() ?? 0;
                             value[version] = downloads;
                         }
                     }

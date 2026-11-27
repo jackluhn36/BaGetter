@@ -59,7 +59,7 @@ public class FileStorageService : IStorageService
         path = GetFullPath(path);
 
         // Ensure that the path exists.
-        Directory.CreateDirectory(Path.GetDirectoryName(path));
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 
         try
         {

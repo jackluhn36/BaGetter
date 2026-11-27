@@ -136,22 +136,22 @@ public class PackageStorageService : IPackageStorageService
             lowercasedNormalizedVersion);
     }
 
-    public async Task<Stream> GetPackageStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
+    public async Task<Stream?> GetPackageStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
     {
         return await GetStreamAsync(id, version, PackagePath, cancellationToken);
     }
 
-    public async Task<Stream> GetNuspecStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
+    public async Task<Stream?> GetNuspecStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
     {
         return await GetStreamAsync(id, version, NuspecPath, cancellationToken);
     }
 
-    public async Task<Stream> GetReadmeStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
+    public async Task<Stream?> GetReadmeStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
     {
         return await GetStreamAsync(id, version, ReadmePath, cancellationToken);
     }
 
-    public async Task<Stream> GetIconStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
+    public async Task<Stream?> GetIconStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken)
     {
         return await GetStreamAsync(id, version, IconPath, cancellationToken);
     }
@@ -172,7 +172,7 @@ public class PackageStorageService : IPackageStorageService
         await _storage.DeleteAsync(iconPath, cancellationToken);
     }
 
-    private async Task<Stream> GetStreamAsync(
+    private async Task<Stream?> GetStreamAsync(
         string id,
         NuGetVersion version,
         Func<string, string, string> pathFunc,

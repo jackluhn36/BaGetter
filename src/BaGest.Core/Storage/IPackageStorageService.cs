@@ -26,8 +26,8 @@ public interface IPackageStorageService
         Package package,
         Stream packageStream,
         Stream nuspecStream,
-        Stream readmeStream,
-        Stream iconStream,
+        Stream? readmeStream,
+        Stream? iconStream,
         CancellationToken cancellationToken);
 
     /// <summary>
@@ -37,7 +37,7 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The package's nupkg stream.</returns>
-    public Task<Stream> GetPackageStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream?> GetPackageStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Retrieve a package's nuspec stream.
@@ -46,7 +46,7 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The package's nuspec stream.</returns>
-    public Task<Stream> GetNuspecStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream?> GetNuspecStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Retrieve a package's readme stream.
@@ -55,9 +55,9 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The package's readme stream.</returns>
-    public Task<Stream> GetReadmeStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream?> GetReadmeStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
-    public Task<Stream> GetIconStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream?> GetIconStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Remove a package's content from storage. This operation SHOULD succeed
