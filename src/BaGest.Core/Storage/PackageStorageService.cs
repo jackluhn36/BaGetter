@@ -32,8 +32,8 @@ public class PackageStorageService : IPackageStorageService
         Package package,
         Stream packageStream,
         Stream nuspecStream,
-        Stream readmeStream,
-        Stream iconStream,
+        Stream? readmeStream,
+        Stream? iconStream,
         CancellationToken cancellationToken = default)
     {
         package = package ?? throw new ArgumentNullException(nameof(package));

@@ -9,7 +9,7 @@ namespace BaGest.Core;
 
 public class ApiKeyAuthenticationService : IAuthenticationService
 {
-    private readonly string _apiKey;
+    private readonly string? _apiKey;
     private readonly ApiKey[] _apiKeys;
 
     public ApiKeyAuthenticationService(IOptionsSnapshot<BaGestOptions> options)

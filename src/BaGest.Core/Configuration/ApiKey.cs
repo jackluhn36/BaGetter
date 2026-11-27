@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace BaGest.Core.Configuration;
 public class ApiKey
 {
-    public string Key { get; set; }
+    public string Key { get; set; } = string.Empty;
 }

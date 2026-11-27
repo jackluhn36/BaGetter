@@ -45,7 +45,7 @@ public class PackageMetadata
     /// The deprecation associated with the package, if any.
     /// </summary>
     [JsonPropertyName("deprecation")]
-    public PackageDeprecation Deprecation { get; set; }
+    public PackageDeprecation? Deprecation { get; set; }
 
     /// <summary>
     /// The package's description.
@@ -63,7 +63,7 @@ public class PackageMetadata
     /// The package's language.
     /// </summary>
     [JsonPropertyName("language")]
-    public string Language { get; set; }
+    public string? Language { get; set; }
 
     /// <summary>
     /// The URL to the package's license.
@@ -82,7 +82,7 @@ public class PackageMetadata
     /// The minimum NuGet client version needed to use this package.
     /// </summary>
     [JsonPropertyName("minClientVersion")]
-    public string MinClientVersion { get; set; }
+    public string? MinClientVersion { get; set; }
 
     /// <summary>
     /// The URL to download the package's content.
@@ -119,11 +119,11 @@ public class PackageMetadata
     /// </summary>
     [JsonPropertyName("tags")]
     [JsonConverter(typeof(StringOrStringArrayJsonConverter))]
-    public IReadOnlyList<string> Tags { get; set; }
+    public IReadOnlyList<string>? Tags { get; set; }
 
     /// <summary>
     /// The package's title.
     /// </summary>
     [JsonPropertyName("title")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
 }

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Nullable>enable</Nullable>
 
     <PackageTags>NuGet;Protocol</PackageTags>
     <Description>Libraries to interact with NuGet server APIs.</Description>

@@ -13,11 +13,11 @@ namespace BaGest.Protocol;
 /// </summary>
 public partial class NuGetClientFactory
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _serviceIndexUrl;
+    private readonly HttpClient? _httpClient;
+    private readonly string? _serviceIndexUrl;
 
-    private readonly SemaphoreSlim _mutex;
-    private NuGetClients _clients;
+    private readonly SemaphoreSlim? _mutex;
+    private NuGetClients? _clients;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NuGetClientFactory"/> class
@@ -36,7 +36,7 @@ public partial class NuGetClientFactory
     ///
     /// For NuGet.org, use https://api.nuget.org/v3/index.json
     /// </param>
-    public NuGetClientFactory(HttpClient httpClient, string serviceIndexUrl)
+    public NuGetClientFactory(HttpClient httpClient, string? serviceIndexUrl)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _serviceIndexUrl = serviceIndexUrl ?? throw new ArgumentNullException(nameof(serviceIndexUrl));
@@ -193,12 +193,12 @@ public partial class NuGetClientFactory
 
     private class NuGetClients
     {
-        public ServiceIndexResponse ServiceIndex { get; set; }
+        public ServiceIndexResponse? ServiceIndex { get; set; }
 
-        public IPackageContentClient PackageContentClient { get; set; }
-        public IPackageMetadataClient PackageMetadataClient { get; set; }
-        public ISearchClient SearchClient { get; set; }
-        public IAutocompleteClient AutocompleteClient { get; set; }
-        public ICatalogClient CatalogClient { get; set; }
+        public IPackageContentClient? PackageContentClient { get; set; }
+        public IPackageMetadataClient? PackageMetadataClient { get; set; }
+        public ISearchClient? SearchClient { get; set; }
+        public IAutocompleteClient? AutocompleteClient { get; set; }
+        public ICatalogClient? CatalogClient { get; set; }
     }
 }

@@ -15,7 +15,7 @@ public class MirrorOptions : IValidatableObject
     /// <summary>
     /// The v3 index that will be mirrored.
     /// </summary>
-    public Uri PackageSource { get; set; }
+    public Uri? PackageSource { get; set; }
 
     /// <summary>
     /// Whether or not the package source is a v2 package source feed.
@@ -28,7 +28,7 @@ public class MirrorOptions : IValidatableObject
     [Range(0, int.MaxValue)]
     public int PackageDownloadTimeoutSeconds { get; set; } = 600;
 
-    public MirrorAuthenticationOptions Authentication { get; set; }
+    public MirrorAuthenticationOptions? Authentication { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

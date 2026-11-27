@@ -128,7 +128,7 @@ public sealed record PackageDeprecationDetails
         return true;
     }
 
-    private static bool TryParseReasons(IEnumerable<string> values, out PackageDeprecationReasons reasons, out string error)
+    private static bool TryParseReasons(IEnumerable<string> values, out PackageDeprecationReasons reasons, out string? error)
     {
         reasons = PackageDeprecationReasons.None;
 

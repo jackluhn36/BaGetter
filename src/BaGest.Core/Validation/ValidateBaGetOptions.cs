@@ -24,7 +24,7 @@ public class ValidateBaGestOptions<TOptions> : IValidateOptions<TOptions> where 
         _optionsName = optionsName;
     }
 
-    public ValidateOptionsResult Validate(string name, TOptions options)
+    public ValidateOptionsResult Validate(string? name, TOptions options)
     {
         // See: https://github.com/dotnet/runtime/blob/e3ffd343ad5bd3a999cb9515f59e6e7a777b2c34/src/libraries/Microsoft.Extensions.Options.DataAnnotations/src/DataAnnotationValidateOptions.cs
         var context = new ValidationContext(options);

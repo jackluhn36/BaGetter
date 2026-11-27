@@ -27,7 +27,7 @@ public sealed class RequiredIfAttribute : ValidationAttribute
     /// <value>
     /// The display name of the other property.
     /// </value>
-    public string OtherPropertyDisplayName { get; set; }
+    public string? OtherPropertyDisplayName { get; set; }
 
     /// <summary>
     /// Gets or sets the other property value that will be relevant for validation.
@@ -101,7 +101,7 @@ public sealed class RequiredIfAttribute : ValidationAttribute
     /// <returns>
     /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
     /// </returns>
-    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
     {
         ArgumentNullException.ThrowIfNull(validationContext);
 
@@ -126,6 +126,6 @@ public sealed class RequiredIfAttribute : ValidationAttribute
                 return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
         }
 
-        return ValidationResult.Success;
+        return ValidationResult.Success!;
     }
 }

@@ -26,23 +26,23 @@ public class FileStorageService : IStorageService
             _storePath += Path.DirectorySeparatorChar;
     }
 
-    public Task<Stream> GetAsync(string path, CancellationToken cancellationToken = default)
+    public Task<Stream?> GetAsync(string path, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
         path = GetFullPath(path);
         var content = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-        return Task.FromResult<Stream>(content);
+        return Task.FromResult<Stream?>(content);
     }
 
-    public Task<Uri> GetDownloadUriAsync(string path, CancellationToken cancellationToken = default)
+    public Task<Uri?> GetDownloadUriAsync(string path, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
         var result = new Uri(GetFullPath(path));
 
-        return Task.FromResult(result);
+        return Task.FromResult<Uri?>(result);
     }
 
     public async Task<StoragePutResult> PutAsync(

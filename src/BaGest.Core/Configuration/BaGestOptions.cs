@@ -7,14 +7,14 @@ public class BaGestOptions
 {
     /// <summary>
     /// The API Key required to authenticate package
-    /// operations. If <see cref="ApiKeys"/> and  <see cref="ApiKey"/> are not set, package operations do not require authentication.
+    /// operations. If <see cref="NugetAuthenticationOptions.ApiKeys"/> and  <see cref="ApiKey"/> are not set, package operations do not require authentication.
     /// </summary>
-    public string ApiKey { get; set; }
+    public string ApiKey { get; set; } = string.Empty;
 
     /// <summary>
     /// The application root URL for usage in reverse proxy scenarios.
     /// </summary>
-    public string PathBase { get; set; }
+    public string PathBase { get; set; } = string.Empty;// ??
 
     /// <summary>
     /// If enabled, the database will be updated at app startup by running
@@ -42,7 +42,7 @@ public class BaGestOptions
     /// The URLs the BaGest server will use.
     /// As per documentation <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/web-host?view=aspnetcore-3.1#server-urls">here (Server URLs)</a>.
     /// </summary>
-    public string Urls { get; set; }
+    public string? Urls { get; set; }
 
     /// <summary>
     /// The maximum package size in GB.
@@ -58,19 +58,19 @@ public class BaGestOptions
     [Obsolete("MaxVersionsPerPackage is deprecated. Please configure RetentionOptions parameters instead.")]
     public uint? MaxVersionsPerPackage { get; set; } = null;
 
-    public RetentionOptions Retention { get; set; }
+    public RetentionOptions? Retention { get; set; }
 
-    public DatabaseOptions Database { get; set; }
+    public DatabaseOptions Database { get; set; } = new();
 
-    public StorageOptions Storage { get; set; }
+    public StorageOptions Storage { get; set; } = new();
 
-    public SearchOptions Search { get; set; }
+    public SearchOptions Search { get; set; } = new();
 
-    public MirrorOptions Mirror { get; set; }
+    public MirrorOptions? Mirror { get; set; }
 
-    public HealthCheckOptions HealthCheck { get; set; }
+    public HealthCheckOptions? HealthCheck { get; set; }
 
-    public StatisticsOptions Statistics { get; set; }
+    public StatisticsOptions? Statistics { get; set; }
 
-    public NugetAuthenticationOptions Authentication { get; set; }
+    public NugetAuthenticationOptions? Authentication { get; set; }
 }
