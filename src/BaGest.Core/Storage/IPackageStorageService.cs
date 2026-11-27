@@ -22,7 +22,7 @@ public interface IPackageStorageService
     /// <param name="iconStream">The package's icon stream, or null if none.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SavePackageContentAsync(
+    public Task SavePackageContentAsync(
         Package package,
         Stream packageStream,
         Stream nuspecStream,
@@ -37,7 +37,7 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The package's nupkg stream.</returns>
-    Task<Stream> GetPackageStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream> GetPackageStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Retrieve a package's nuspec stream.
@@ -46,7 +46,7 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The package's nuspec stream.</returns>
-    Task<Stream> GetNuspecStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream> GetNuspecStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Retrieve a package's readme stream.
@@ -55,9 +55,9 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>The package's readme stream.</returns>
-    Task<Stream> GetReadmeStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream> GetReadmeStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
-    Task<Stream> GetIconStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream> GetIconStreamAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Remove a package's content from storage. This operation SHOULD succeed
@@ -67,5 +67,5 @@ public interface IPackageStorageService
     /// <param name="version">The package's version.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task DeleteAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task DeleteAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 }

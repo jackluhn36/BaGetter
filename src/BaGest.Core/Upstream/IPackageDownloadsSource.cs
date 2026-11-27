@@ -5,5 +5,5 @@ namespace BaGest.Core;
 
 public interface IPackageDownloadsSource
 {
-    Task<Dictionary<string, Dictionary<string, long>>> GetPackageDownloadsAsync();
+    public Task<Dictionary<string, Dictionary<string, long>>> GetPackageDownloadsAsync();
 }

@@ -12,5 +12,5 @@ public interface IFrameworkCompatibilityService
     /// </summary>
     /// <param name="framework">The input framework.</param>
     /// <returns>The list of compatible frameworks.</returns>
-    IReadOnlyList<string> FindAllCompatibleFrameworks(string framework);
+    public IReadOnlyList<string> FindAllCompatibleFrameworks(string framework);
 }

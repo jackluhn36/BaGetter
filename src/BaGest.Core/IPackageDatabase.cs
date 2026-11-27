@@ -17,7 +17,7 @@ public interface IPackageDatabase
     /// <param name="package">The package to add to the database.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The result of attempting to add the package to the database.</returns>
-    Task<PackageAddResult> AddAsync(Package package, CancellationToken cancellationToken);
+    public Task<PackageAddResult> AddAsync(Package package, CancellationToken cancellationToken);
 
     /// <summary>
     /// Attempt to find a package with the given id and version.
@@ -27,7 +27,7 @@ public interface IPackageDatabase
     /// <param name="includeUnlisted">Whether unlisted results should be included.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package found, or null.</returns>
-    Task<Package> FindOrNullAsync(
+    public Task<Package> FindOrNullAsync(
         string id,
         NuGetVersion version,
         bool includeUnlisted,
@@ -40,7 +40,7 @@ public interface IPackageDatabase
     /// <param name="includeUnlisted">Whether unlisted results should be included.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The packages found. Always non-null.</returns>
-    Task<IReadOnlyList<Package>> FindAsync(string id, bool includeUnlisted, CancellationToken cancellationToken);
+    public Task<IReadOnlyList<Package>> FindAsync(string id, bool includeUnlisted, CancellationToken cancellationToken);
 
     /// <summary>
     /// Determine whether a package exists in the database (even if the package is unlisted).
@@ -48,7 +48,7 @@ public interface IPackageDatabase
     /// <param name="id">The package id to search.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>Whether the package exists in the database.</returns>
-    Task<bool> ExistsAsync(string id, CancellationToken cancellationToken);
+    public Task<bool> ExistsAsync(string id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Determine whether a package exists in the database (even if the package is unlisted).
@@ -57,7 +57,7 @@ public interface IPackageDatabase
     /// <param name="version">The package version to search.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>Whether the package exists in the database.</returns>
-    Task<bool> ExistsAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<bool> ExistsAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Unlist a package, making it undiscoverable.
@@ -66,7 +66,7 @@ public interface IPackageDatabase
     /// <param name="version">The version of the package to unlist.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>False if the package does not exist.</returns>
-    Task<bool> UnlistPackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<bool> UnlistPackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Relist a package, making it discoverable.
@@ -75,7 +75,7 @@ public interface IPackageDatabase
     /// <param name="version">The version of the package to relist.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>False if the package does not exist.</returns>
-    Task<bool> RelistPackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<bool> RelistPackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Deprecate a package, replacing any previous deprecation of that version.
@@ -85,7 +85,7 @@ public interface IPackageDatabase
     /// <param name="deprecation">The deprecation to apply.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>False if the package does not exist.</returns>
-    Task<bool> DeprecatePackageAsync(
+    public Task<bool> DeprecatePackageAsync(
         string id,
         NuGetVersion version,
         PackageDeprecationDetails deprecation,
@@ -98,7 +98,7 @@ public interface IPackageDatabase
     /// <param name="version">The version of the package to undeprecate.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>False if the package does not exist.</returns>
-    Task<bool> UndeprecatePackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<bool> UndeprecatePackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Increment a package's download count.
@@ -107,7 +107,7 @@ public interface IPackageDatabase
     /// <param name="version">The id of the package to update.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>Task that completes when the package's download has been incremented.</returns>
-    Task AddDownloadAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task AddDownloadAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Completely remove the package from the database.
@@ -116,7 +116,7 @@ public interface IPackageDatabase
     /// <param name="version">The version of the pacakge to remove.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>False if the package doesn't exist.</returns>
-    Task<bool> HardDeletePackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<bool> HardDeletePackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 }
 
 /// <summary>

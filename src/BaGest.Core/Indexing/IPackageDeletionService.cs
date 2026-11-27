@@ -21,7 +21,7 @@ public interface IPackageDeletionService
     /// <param name="deletePrereleasesOfOlderMajors">Delete all pre-release versions whose major version is lower than the highest major version that has a stable release</param>
     /// <param name="cancellationToken">Cancel the operation</param>
     /// <returns>Number of packages deleted</returns>
-    Task<int> DeleteOldVersionsAsync(Package package, uint? maxMajor, uint? maxMinor, uint? maxPatch, uint? maxPrerelease, bool deletePrereleasesOfOlderMajors, CancellationToken cancellationToken);
+    public Task<int> DeleteOldVersionsAsync(Package package, uint? maxMajor, uint? maxMinor, uint? maxPatch, uint? maxPrerelease, bool deletePrereleasesOfOlderMajors, CancellationToken cancellationToken);
 
     /// <summary>
     /// Attempt to delete a package.
@@ -30,5 +30,5 @@ public interface IPackageDeletionService
     /// <param name="version">The version of the package to delete.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>False if the package does not exist.</returns>
-    Task<bool> TryDeletePackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<bool> TryDeletePackageAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 }

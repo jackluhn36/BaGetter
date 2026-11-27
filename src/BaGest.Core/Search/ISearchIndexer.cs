@@ -11,5 +11,5 @@ public interface ISearchIndexer
     /// <param name="package">The package to add.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>A task that completes once the package has been added.</returns>
-    Task IndexAsync(Package package, CancellationToken cancellationToken);
+    public Task IndexAsync(Package package, CancellationToken cancellationToken);
 }

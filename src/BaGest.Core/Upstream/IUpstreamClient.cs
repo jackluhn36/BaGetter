@@ -21,7 +21,7 @@ public interface IUpstreamClient
     /// All versions of a package, including unlisted packages.
     /// Returns an empty list if the package could not be found.
     /// </returns>
-    Task<IReadOnlyList<NuGetVersion>> ListPackageVersionsAsync(string id, CancellationToken cancellationToken);
+    public Task<IReadOnlyList<NuGetVersion>> ListPackageVersionsAsync(string id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Try to get the metadata for all versions of a package from the upstream package source. Returns empty
@@ -33,7 +33,7 @@ public interface IUpstreamClient
     /// The metadata for all versions of a package, including unlisted versions.
     /// Returns an empty list if the package could not be found.
     /// </returns>
-    Task<IReadOnlyList<Package>> ListPackagesAsync(string id, CancellationToken cancellationToken);
+    public Task<IReadOnlyList<Package>> ListPackagesAsync(string id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Download a package from the upstream package source. Returns null if the package does not exist.
@@ -45,11 +45,11 @@ public interface IUpstreamClient
     /// The package stream or null if the package cannot be found.
     /// The stream is guaranteed to be seekable if not not null.
     /// </returns>
-    Task<Stream> DownloadPackageOrNullAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
+    public Task<Stream> DownloadPackageOrNullAsync(string id, NuGetVersion version, CancellationToken cancellationToken);
 
     /// <summary>
     /// Get the service index url from the upstream package source.
     /// </summary>
     /// <returns>The service index url as a string</returns>
-    string GetServiceIndexUrl();
+    public string GetServiceIndexUrl();
 }

@@ -5,7 +5,7 @@ namespace BaGest.Core.Statistics;
 
 public interface IStatisticsService
 {
-    Task<int> GetPackagesTotalAmount();
-    Task<int> GetVersionsTotalAmount();
-    IEnumerable<string> GetKnownServices();
+    public Task<int> GetPackagesTotalAmount();
+    public Task<int> GetVersionsTotalAmount();
+    public IEnumerable<string> GetKnownServices();
 }

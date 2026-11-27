@@ -18,7 +18,7 @@ public interface ISymbolStorageService
     /// <param name="pdbStream">The PDB's content stream.</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SavePortablePdbContentAsync(
+    public Task SavePortablePdbContentAsync(
         string file,
         string key,
         Stream pdbStream,
@@ -30,5 +30,5 @@ public interface ISymbolStorageService
     /// <param name="file">The portable PDB's file name.</param>
     /// <param name="key">The portable PDB's Signature GUID followed by its age.</param>
     /// <returns>The portable PDB's stream, or null if it does not exist.</returns>
-    Task<Stream> GetPortablePdbContentStreamOrNullAsync(string file, string key);
+    public Task<Stream> GetPortablePdbContentStreamOrNullAsync(string file, string key);
 }
