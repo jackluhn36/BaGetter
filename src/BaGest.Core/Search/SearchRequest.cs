@@ -29,12 +29,12 @@ public class SearchRequest
     /// <summary>
     /// Filter results to a package type. If null, no filter is applied.
     /// </summary>
-    public string PackageType { get; set; } = string.Empty;
+    public string? PackageType { get; set; }
 
     /// <summary>
     /// Filters results to a target framework. If null, no filter is applied.
     /// </summary>
-    public string Framework { get; set; } = string.Empty;
+    public string? Framework { get; set; }
 
     /// <summary>
     /// The search query.
@@ -46,5 +46,5 @@ public class SearchRequest
     /// Search services that cannot sort return results in their default order.
     /// </summary>
     public SearchSortOrder SortOrder { get; set; } = SearchSortOrder.Relevance;
-    
+
 }

@@ -51,26 +51,26 @@ public class PackageModel : PageModel
 
     public bool Found { get; private set; }
 
-    public Package Package { get; private set; }
+    public Package? Package { get; private set; }
 
     public bool IsDotnetTemplate { get; private set; }
     public bool IsDotnetTool { get; private set; }
     public DateTime LastUpdated { get; private set; }
     public long TotalDownloads { get; private set; }
 
-    public IReadOnlyList<PackageDependent> UsedBy { get; set; }
-    public IReadOnlyList<DependencyGroupModel> DependencyGroups { get; private set; }
-    public IReadOnlyList<VersionModel> Versions { get; private set; }
+    public IReadOnlyList<PackageDependent> UsedBy { get; set; } = Array.Empty<PackageDependent>();
+    public IReadOnlyList<DependencyGroupModel> DependencyGroups { get; private set; } = Array.Empty<DependencyGroupModel>();
+    public IReadOnlyList<VersionModel> Versions { get; private set; } = Array.Empty<VersionModel>();
 
-    public DeprecationModel Deprecation { get; private set; }
+    public DeprecationModel? Deprecation { get; private set; }
 
-    public HtmlString Readme { get; private set; }
+    public HtmlString? Readme { get; private set; }
 
-    public HtmlString ParsedReleaseNotes { get; private set; }
+    public HtmlString? ParsedReleaseNotes { get; private set; }
 
-    public string IconUrl { get; private set; }
-    public string LicenseUrl { get; private set; }
-    public string PackageDownloadUrl { get; private set; }
+    public string? IconUrl { get; private set; }
+    public string? LicenseUrl { get; private set; }
+    public string? PackageDownloadUrl { get; private set; }
 
     public async Task OnGetAsync(string id, string version, CancellationToken cancellationToken)
     {
@@ -125,7 +125,7 @@ public class PackageModel : PageModel
         PackageDownloadUrl = _url.GetPackageDownloadUrl(Package.Id, packageVersion);
     }
 
-    private static DeprecationModel ToDeprecationOrNull(Package package)
+    private static DeprecationModel? ToDeprecationOrNull(Package package)
     {
         if (!package.IsDeprecated)
         {
@@ -245,7 +245,7 @@ public class PackageModel : PageModel
             .ToList();
     }
 
-    private async Task<HtmlString> GetReadmeHtmlStringOrNullAsync(
+    private async Task<HtmlString?> GetReadmeHtmlStringOrNullAsync(
         string packageId,
         NuGetVersion packageVersion,
         CancellationToken cancellationToken)
@@ -262,7 +262,7 @@ public class PackageModel : PageModel
 
     private HtmlString ParseReleaseNotes()
     {
-        if (string.IsNullOrWhiteSpace(Package.ReleaseNotes))
+        if (string.IsNullOrWhiteSpace(Package?.ReleaseNotes))
         {
             return HtmlString.Empty;
         }
@@ -273,21 +273,21 @@ public class PackageModel : PageModel
 
     public class DependencyGroupModel
     {
-        public string Name { get; set; }
-        public IReadOnlyList<DependencyModel> Dependencies { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public IReadOnlyList<DependencyModel> Dependencies { get; set; } = Array.Empty<DependencyModel>();
     }
 
     // TODO: Convert this to records.
     public class DependencyModel
     {
-        public string PackageId { get; set; }
-        public string VersionSpec { get; set; }
+        public string PackageId { get; set; } = string.Empty;
+        public string VersionSpec { get; set; } = string.Empty;
     }
 
     // TODO: Convert this to records.
     public class VersionModel
     {
-        public NuGetVersion Version { get; set; }
+        public NuGetVersion Version { get; set; } = default!;
         public long Downloads { get; set; }
         public bool Selected { get; set; }
         public bool IsDeprecated { get; set; }
@@ -303,7 +303,7 @@ public class PackageModel : PageModel
     /// <param name="AlternatePackageVersionSpec">The pretty-printed version range of the alternate package, or null if any version is allowed.</param>
     public record DeprecationModel(
         string Summary,
-        string Message,
-        string AlternatePackageId,
-        string AlternatePackageVersionSpec);
+        string? Message,
+        string? AlternatePackageId,
+        string? AlternatePackageVersionSpec);
 }

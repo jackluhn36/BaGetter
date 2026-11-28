@@ -257,7 +257,7 @@ public class DatabaseSearchService : ISearchService
     }
 
     [SuppressMessage("Performance", "CA1862", Justification = "EF Core translates ToLower(), not the StringComparison overloads.")]
-    private static IQueryable<Package> ApplyAutocompleteQuery(IQueryable<Package> query, string search)
+    private static IQueryable<Package> ApplyAutocompleteQuery(IQueryable<Package> query, string? search)
     {
         foreach (var term in ParseKeywords(search))
         {
@@ -273,7 +273,7 @@ public class DatabaseSearchService : ISearchService
     /// ASP.NET Core has already decoded the query string, and decoding it again would change literal
     /// percent signs.
     /// </summary>
-    private static IEnumerable<string> ParseKeywords(string search)
+    private static IEnumerable<string> ParseKeywords(string? search)
     {
         if (string.IsNullOrWhiteSpace(search))
         {
@@ -317,7 +317,7 @@ public class DatabaseSearchService : ISearchService
         return query.Where(p => p.Listed);
     }
 
-    private IReadOnlyList<string> GetCompatibleFrameworksOrNull(string framework)
+    private IReadOnlyList<string> GetCompatibleFrameworksOrNull(string? framework)
     {
         if (framework == null) return Array.Empty<string>();
 

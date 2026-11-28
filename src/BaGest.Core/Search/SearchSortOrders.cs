@@ -34,7 +34,7 @@ public static class SearchSortOrders
     /// Parses a <c>sortBy</c> value, ignoring case. As on nuget.org, a missing or unknown value
     /// means <see cref="SearchSortOrder.Relevance"/>.
     /// </summary>
-    public static SearchSortOrder Parse(string value)
+    public static SearchSortOrder Parse(string? value)
     {
         return value != null && OrdersByValue.TryGetValue(value, out var order)
             ? order

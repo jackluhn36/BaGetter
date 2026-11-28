@@ -176,7 +176,7 @@ public class V2UpstreamClient : IUpstreamClient, IDisposable
             PackageTypes = new List<PackageType>(),
             RepositoryUrl = null,
             RepositoryType = null,
-            Tags = package.Tags?.Split(TagsSeparators, StringSplitOptions.RemoveEmptyEntries),
+            Tags = package.Tags.Split(TagsSeparators, StringSplitOptions.RemoveEmptyEntries),
 
             Dependencies = ToDependencies(package)
         };

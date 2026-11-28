@@ -177,7 +177,7 @@ public class V3UpstreamClient : IUpstreamClient
             {
                 new PackageDependency
                 {
-                    Id = null,
+                    Id = string.Empty,
                     VersionRange = string.Empty,
                     TargetFramework = group.TargetFramework,
                 }

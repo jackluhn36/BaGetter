@@ -77,7 +77,7 @@ public class SearchResult
     /// </summary>
     [JsonPropertyName("tags")]
     [JsonConverter(typeof(StringOrStringArrayJsonConverter))]
-    public IReadOnlyList<string>? Tags { get; set; }
+    public IReadOnlyList<string> Tags { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// The title of the matched package.

@@ -18,12 +18,12 @@ public class BaGestUrlGenerator : IUrlGenerator
         _linkGenerator = linkGenerator ?? throw new ArgumentNullException(nameof(linkGenerator));
     }
 
+    private HttpContext HttpContext => _httpContextAccessor.HttpContext
+        ?? throw new InvalidOperationException("An HTTP context is required to generate URLs.");
+
     public string GetServiceIndexUrl()
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
-            Routes.IndexRouteName,
-            values: null);
+        return GetUriByRouteValues(Routes.IndexRouteName, values: null);
     }
 
     public string GetPackageContentResourceUrl()
@@ -38,40 +38,27 @@ public class BaGestUrlGenerator : IUrlGenerator
 
     public string GetPackagePublishResourceUrl()
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
-            Routes.UploadPackageRouteName,
-            values: null);
+        return GetUriByRouteValues(Routes.UploadPackageRouteName, values: null);
     }
 
     public string GetSymbolPublishResourceUrl()
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
-            Routes.UploadSymbolRouteName,
-            values: null);
+        return GetUriByRouteValues(Routes.UploadSymbolRouteName, values: null);
     }
 
     public string GetSearchResourceUrl()
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
-            Routes.SearchRouteName,
-            values: null);
+        return GetUriByRouteValues(Routes.SearchRouteName, values: null);
     }
 
     public string GetAutocompleteResourceUrl()
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
-            Routes.AutocompleteRouteName,
-            values: null);
+        return GetUriByRouteValues(Routes.AutocompleteRouteName, values: null);
     }
 
     public string GetRegistrationIndexUrl(string id)
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
+        return GetUriByRouteValues(
             Routes.RegistrationIndexRouteName,
             values: new { Id = id.ToLowerInvariant() });
     }
@@ -84,8 +71,7 @@ public class BaGestUrlGenerator : IUrlGenerator
 
     public string GetRegistrationLeafUrl(string id, NuGetVersion version)
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
+        return GetUriByRouteValues(
             Routes.RegistrationLeafRouteName,
             values: new
             {
@@ -96,8 +82,7 @@ public class BaGestUrlGenerator : IUrlGenerator
 
     public string GetPackageVersionsUrl(string id)
     {
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
+        return GetUriByRouteValues(
             Routes.PackageVersionsRouteName,
             values: new { Id = id.ToLowerInvariant() });
     }
@@ -107,8 +92,7 @@ public class BaGestUrlGenerator : IUrlGenerator
         id = id.ToLowerInvariant();
         var versionString = version.ToNormalizedString().ToLowerInvariant();
 
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
+        return GetUriByRouteValues(
             Routes.PackageDownloadRouteName,
             values: new
             {
@@ -123,8 +107,7 @@ public class BaGestUrlGenerator : IUrlGenerator
         id = id.ToLowerInvariant();
         var versionString = version.ToNormalizedString().ToLowerInvariant();
 
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
+        return GetUriByRouteValues(
             Routes.PackageDownloadRouteName,
             values: new
             {
@@ -139,8 +122,7 @@ public class BaGestUrlGenerator : IUrlGenerator
         id = id.ToLowerInvariant();
         var versionString = version.ToNormalizedString().ToLowerInvariant();
 
-        return _linkGenerator.GetUriByRouteValues(
-            _httpContextAccessor.HttpContext,
+        return GetUriByRouteValues(
             Routes.PackageDownloadIconRouteName,
             values: new
             {
@@ -149,9 +131,15 @@ public class BaGestUrlGenerator : IUrlGenerator
             });
     }
 
+    private string GetUriByRouteValues(string routeName, object? values)
+    {
+        return _linkGenerator.GetUriByRouteValues(HttpContext, routeName, values)
+            ?? throw new InvalidOperationException($"Could not generate a URL for route '{routeName}'.");
+    }
+
     private string AbsoluteUrl(string relativePath)
     {
-        var request = _httpContextAccessor.HttpContext.Request;
+        var request = HttpContext.Request;
 
         return string.Concat(
             request.Scheme,

@@ -20,10 +20,10 @@ public class ApiKeyAuthenticationService : IAuthenticationService
         _apiKeys = options.Value.Authentication?.ApiKeys ?? [];
     }
 
-    public Task<bool> AuthenticateAsync(string apiKey, CancellationToken cancellationToken)
+    public Task<bool> AuthenticateAsync(string? apiKey, CancellationToken cancellationToken)
         => Task.FromResult(Authenticate(apiKey));
 
-    private bool Authenticate(string apiKey)
+    private bool Authenticate(string? apiKey)
     {
         // No authentication is necessary if there is no required API key.
         if (_apiKey == null && (_apiKeys.Length == 0)) return true;

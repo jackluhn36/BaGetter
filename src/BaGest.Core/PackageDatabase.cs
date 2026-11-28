@@ -104,7 +104,7 @@ public class PackageDatabase : IPackageDatabase
     public Task<bool> DeprecatePackageAsync(
         string id,
         NuGetVersion version,
-        PackageDeprecationDetails deprecation,
+        PackageDeprecationDetails? deprecation,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(deprecation);

@@ -135,6 +135,7 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Tags")
+                        .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("TEXT");
 

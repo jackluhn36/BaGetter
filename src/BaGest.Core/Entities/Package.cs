@@ -54,7 +54,7 @@ public class Package
     public Uri? RepositoryUrl { get; set; }
     public string? RepositoryType { get; set; }
 
-    public string[]? Tags { get; set; }
+    public string[] Tags { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// Why this package version is deprecated, or <see cref="PackageDeprecationReasons.None"/>.

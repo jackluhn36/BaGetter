@@ -234,9 +234,9 @@ else
         { "net11", ".NET Framework 1.1" },
     };
 
-    private string SearchLink(
-        string packageType = null,
-        string framework = null,
+    private string? SearchLink(
+        string? packageType = null,
+        string? framework = null,
         bool? prerelease = null,
         SearchSortOrder? sortOrder = null,
         int? page = null)
@@ -248,7 +248,7 @@ else
         page = page ?? Model.PageIndex;
 
         if (packageType == "any") packageType = null;
-        if (framework == "any") framework = null;
+        if (framework == "any") framework =  null;
         if (prerelease == true) prerelease = null;
         if (page == 1) page = null;
 

@@ -5,5 +5,5 @@ namespace BaGest.Core;
 
 public interface IAuthenticationService
 {
-    public Task<bool> AuthenticateAsync(string apiKey, CancellationToken cancellationToken);
+    public Task<bool> AuthenticateAsync(string? apiKey, CancellationToken cancellationToken);
 }

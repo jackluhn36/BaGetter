@@ -18,16 +18,16 @@ internal class ApplicationVersion
     /// <summary>
     /// The version with additional information e.g. <c>7.8.9+commitHash</c>
     /// </summary>
-    public string InformationalVersion { get; private set; }
-    public string Branch { get; private set; }
-    public string Commit { get; private set; }
+    public string? InformationalVersion { get; private set; }
+    public string? Branch { get; private set; }
+    public string? Commit { get; private set; }
     public DateTime BuildDateUtc { get; private set; }
-    public string Authors { get; private set; }
+    public string? Authors { get; private set; }
 
     // Calculated
-    public string ShortCommit { get; private set; }
-    public Uri BranchUri { get; private set; }
-    public Uri CommitUri { get; private set; }
+    public string? ShortCommit { get; private set; }
+    public Uri? BranchUri { get; private set; }
+    public Uri? CommitUri { get; private set; }
 
     private ApplicationVersion()
     {
@@ -38,7 +38,7 @@ internal class ApplicationVersion
         BuildDateUtc = DateTime.UtcNow;
     }
 
-    public ApplicationVersion(Uri repositoryBase, string informationalVersion, string version, string branch, string commit, DateTime buildDateUtc, string authors)
+    public ApplicationVersion(Uri? repositoryBase, string informationalVersion, string version, string? branch, string? commit, DateTime buildDateUtc, string authors)
     {
         Present = true;
         InformationalVersion = informationalVersion;

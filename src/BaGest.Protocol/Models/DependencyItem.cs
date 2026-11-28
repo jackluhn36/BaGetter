@@ -13,7 +13,7 @@ public class DependencyItem
     /// The ID of the package dependency.
     /// </summary>
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     /// <summary>
     /// The allowed version range of the dependency.

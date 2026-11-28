@@ -57,7 +57,7 @@ public static class HtmlHelperExtensions
         return new HtmlString(builder.ToString());
     }
 
-    private static void WriteMetaTag(StringBuilder builder, string name, string val)
+    private static void WriteMetaTag(StringBuilder builder, string name, string? val)
     {
         if (!string.IsNullOrEmpty(val))
         {

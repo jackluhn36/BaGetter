@@ -64,9 +64,9 @@ internal static class ApplicationVersionHelper
         }
     }
 
-    private static string TryGet(Dictionary<string, string> metadata, string key)
+    private static string? TryGet(Dictionary<string, string?>? metadata, string key)
     {
-        if (!metadata.TryGetValue(key, out var val))
+        if (metadata == null || !metadata.TryGetValue(key, out var val))
         {
             return string.Empty;
         }

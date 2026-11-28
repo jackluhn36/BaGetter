@@ -14,7 +14,7 @@ public class IndexModel : PageModel
 {
     private readonly ISearchService _search;
 
-    public IndexModel(ISearchService search)
+    public IndexModel(ISearchService? search)
     {
         _search = search ?? throw new ArgumentNullException(nameof(search));
     }
@@ -22,7 +22,7 @@ public class IndexModel : PageModel
     public const int ResultsPerPage = 20;
 
     [BindProperty(Name = "q", SupportsGet = true)]
-    public string Query { get; set; }
+    public string Query { get; set; } = string.Empty;
 
     [BindProperty(Name = "p", SupportsGet = true)]
     [Range(1, int.MaxValue)]
@@ -41,11 +41,11 @@ public class IndexModel : PageModel
     /// The order of the results, as a <c>sortBy</c> value of the search API. See <see cref="SearchSortOrders"/>.
     /// </summary>
     [BindProperty(SupportsGet = true)]
-    public string SortBy { get; set; }
+    public string SortBy { get; set; } = string.Empty;// TODO
 
     public SearchSortOrder SortOrder => SearchSortOrders.Parse(SortBy);
 
-    public IReadOnlyList<SearchResult> Packages { get; private set; }
+    public IReadOnlyList<SearchResult> Packages { get; private set; } = Array.Empty<SearchResult>();
 
     public async Task<IActionResult> OnGetAsync(CancellationToken cancellationToken)
     {

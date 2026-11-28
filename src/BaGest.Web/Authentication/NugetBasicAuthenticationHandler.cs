@@ -36,12 +36,12 @@ public class NugetBasicAuthenticationHandler : AuthenticationHandler<Authenticat
         if (!Request.Headers.TryGetValue("Authorization", out var auth))
             return Task.FromResult(AuthenticateResult.NoResult());
 
-        string username = null;
-        string password = null;
+        string? username = null;
+        string? password = null;
         try
         {
-            var authHeader = AuthenticationHeaderValue.Parse(auth);
-            var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+            var authHeader = AuthenticationHeaderValue.Parse(auth!);
+            var credentialBytes = Convert.FromBase64String(authHeader.Parameter!);
             var credentials = Encoding.UTF8.GetString(credentialBytes).Split([':'], 2);
             username = credentials[0];
             password = credentials[1];
@@ -95,6 +95,6 @@ public class NugetBasicAuthenticationHandler : AuthenticationHandler<Authenticat
 
     private bool ValidateCredentials(string username, string password)
     {
-        return bagestOptions.Value.Authentication.Credentials.Any(a => a.Username.Equals(username, StringComparison.OrdinalIgnoreCase) && a.Password == password);
+        return bagestOptions!.Value!.Authentication!.Credentials.Any(a => a.Username.Equals(username, StringComparison.OrdinalIgnoreCase) && a.Password == password);
     }
 }

@@ -18,7 +18,7 @@ public class NavLinkTagHelper : TagHelper
     }
 
     [HtmlAttributeName("asp-page")]
-    public string Page { get; set; }
+    public string? Page { get; set; } 
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
