@@ -8,16 +8,16 @@ namespace BaGest.Aws;
 public class S3StorageOptions : IValidatableObject
 {
     [RequiredIf(nameof(SecretKey), null, IsInverted = true)]
-    public string AccessKey { get; set; }
+    public string? AccessKey { get; set; }
 
     [RequiredIf(nameof(AccessKey), null, IsInverted = true)]
-    public string SecretKey { get; set; }
+    public string? SecretKey { get; set; }
 
     [RequiredIf(nameof(Endpoint), null)]
-    public string Region { get; set; }
+    public string? Region { get; set; }
 
     [RequiredIf(nameof(Region), null)]
-    public Uri Endpoint { get; set; }
+    public Uri? Endpoint { get; set; }
 
     /// <summary>
     /// Addresses the bucket in the URL path instead of the host name. Needed by S3-compatible
@@ -40,13 +40,13 @@ public class S3StorageOptions : IValidatableObject
     public bool RequestChecksumCalculation { get; set; } = true;
 
     [Required]
-    public string Bucket { get; set; }
+    public string Bucket { get; set; } = string.Empty;
 
-    public string Prefix { get; set; }
+    public string Prefix { get; set; } = string.Empty;
 
     public bool UseInstanceProfile { get; set; }
 
-    public string AssumeRoleArn { get; set; }
+    public string? AssumeRoleArn { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

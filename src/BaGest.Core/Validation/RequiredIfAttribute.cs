@@ -35,7 +35,7 @@ public sealed class RequiredIfAttribute : ValidationAttribute
     /// <value>
     /// The other property value.
     /// </value>
-    public object OtherPropertyValue { get; }
+    public object? OtherPropertyValue { get; }
 
     /// <summary>
     /// Gets or sets a value indicating whether other property's value should match or differ from provided other property's value (default is <c>false</c>).
@@ -65,7 +65,7 @@ public sealed class RequiredIfAttribute : ValidationAttribute
     /// </summary>
     /// <param name="otherProperty">The other property.</param>
     /// <param name="otherPropertyValue">The other property value.</param>
-    public RequiredIfAttribute(string otherProperty, object otherPropertyValue)
+    public RequiredIfAttribute(string otherProperty, object? otherPropertyValue)
         : base("'{0}' is required because '{1}' has a value {3}'{2}'.")
     {
         OtherProperty = otherProperty;

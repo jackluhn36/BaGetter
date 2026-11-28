@@ -23,7 +23,7 @@ public static class AwsApplicationExtensions
 
         app.Services.AddProvider<IStorageService>((provider, config) =>
         {
-            if (!config.HasStorageType("AwsS3")) return null;
+            if (!config.HasStorageType("AwsS3")) return new NullStorageService();
 
             return provider.GetRequiredService<S3StorageService>();
         });
