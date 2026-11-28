@@ -6,5 +6,5 @@ namespace BaGest.Gcp;
 public class GoogleCloudStorageOptions : StorageOptions
 {
     [Required]
-    public string BucketName { get; set; }
+    public string BucketName { get; set; } = string.Empty;
 }

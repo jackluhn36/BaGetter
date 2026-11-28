@@ -17,7 +17,7 @@ public static class GoogleCloudApplicationExtensions
 
         app.Services.AddProvider<IStorageService>((provider, config) =>
         {
-            if (!config.HasStorageType("GoogleCloud")) return null;
+            if (!config.HasStorageType("GoogleCloud")) return new NullStorageService();
 
             return provider.GetRequiredService<GoogleCloudStorageService>();
         });
