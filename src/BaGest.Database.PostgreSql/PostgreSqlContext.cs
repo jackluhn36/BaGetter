@@ -20,7 +20,7 @@ public class PostgreSqlContext : AbstractContext<PostgreSqlContext>
     public PostgreSqlContext(DbContextOptions<PostgreSqlContext> efOptions, IOptionsSnapshot<BaGestOptions> bagestOptions)
         : base(efOptions)
     {
-        _bagestOptions = bagestOptions.Value.Database;
+        _bagestOptions = bagestOptions.Value.Database!;
     }
 
     public override bool IsUniqueConstraintViolationException(DbUpdateException exception)

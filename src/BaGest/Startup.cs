@@ -40,11 +40,11 @@ public class Startup
         // You can swap between implementations of subsystems like storage and search using BaGest's configuration.
         // Each subsystem's implementation has a provider that reads the configuration to determine if it should be
         // activated. BaGest will run through all its providers until it finds one that is active.
-        services.AddScoped(DependencyInjectionExtensions.GetServiceFromProviders<IContext>);
-        services.AddTransient(DependencyInjectionExtensions.GetServiceFromProviders<IStorageService>);
-        services.AddTransient(DependencyInjectionExtensions.GetServiceFromProviders<IPackageDatabase>);
-        services.AddTransient(DependencyInjectionExtensions.GetServiceFromProviders<ISearchService>);
-        services.AddTransient(DependencyInjectionExtensions.GetServiceFromProviders<ISearchIndexer>);
+        services.AddScoped<IContext>(services => DependencyInjectionExtensions.GetServiceFromProviders<IContext>(services)!);
+        services.AddTransient<IStorageService>(services => DependencyInjectionExtensions.GetServiceFromProviders<IStorageService>(services)!);
+        services.AddTransient<IPackageDatabase>(services => DependencyInjectionExtensions.GetServiceFromProviders<IPackageDatabase>(services)!);
+        services.AddTransient<ISearchService>(services => DependencyInjectionExtensions.GetServiceFromProviders<ISearchService>(services)!);
+        services.AddTransient<ISearchIndexer>(services => DependencyInjectionExtensions.GetServiceFromProviders<ISearchIndexer>(services)!);
 
         services.AddHealthChecks();
 
@@ -98,7 +98,8 @@ public class Startup
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        var options = Configuration.Get<BaGestOptions>();
+        var options = Configuration.Get<BaGestOptions>()
+            ?? throw new InvalidOperationException("BaGest configuration could not be loaded.");
 
         if (env.IsDevelopment())
         {
@@ -126,12 +127,15 @@ public class Startup
             baget.MapEndpoints(endpoints);
         });
 
-        app.UseHealthChecks(options.HealthCheck.Path,
+        var healthCheck = options.HealthCheck
+            ?? throw new InvalidOperationException("BaGest health check configuration could not be loaded.");
+
+        app.UseHealthChecks(healthCheck.Path,
             new HealthCheckOptions
             {
                 ResponseWriter = async (context, report) =>
                 {
-                    await report.FormatAsJson(context.Response.Body, options.Statistics.ListConfiguredServices, options.HealthCheck.StatusPropertyName,
+                    await report.FormatAsJson(context.Response.Body, options.Statistics?.ListConfiguredServices ?? false, healthCheck.StatusPropertyName,
                         context.RequestAborted);
                 },
                 Predicate = check => check.IsConfigured(options)

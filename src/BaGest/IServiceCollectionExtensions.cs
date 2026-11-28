@@ -26,7 +26,7 @@ internal static class IServiceCollectionExtensions
         return app;
     }
 
-    internal static BaGestApplication AddNugetBasicHttpAuthorization(this BaGestApplication app, Action<AuthorizationPolicyBuilder> configurePolicy = null)
+    internal static BaGestApplication AddNugetBasicHttpAuthorization(this BaGestApplication app, Action<AuthorizationPolicyBuilder>? configurePolicy = null)
     {
         app.Services.AddAuthorization(options =>
         {

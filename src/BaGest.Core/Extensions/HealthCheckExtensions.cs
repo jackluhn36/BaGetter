@@ -54,8 +54,8 @@ public static class HealthCheckExtensions
     public static bool IsConfigured(this HealthCheckRegistration check, BaGestOptions options)
     {
         return check.Tags.Count == 0 || // General checks
-               check.Tags.Contains(options.Database.Type) || // Database check
-               check.Tags.Contains(options.Storage.Type) || // Storage check
-               check.Tags.Contains(options.Search.Type); // Search check
+               check.Tags.Contains(options.Database!.Type) || // Database check
+               check.Tags.Contains(options.Storage!.Type) || // Storage check
+               check.Tags.Contains(options.Search!.Type); // Search check
     }
 }

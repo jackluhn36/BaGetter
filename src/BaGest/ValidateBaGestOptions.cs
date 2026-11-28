@@ -46,7 +46,7 @@ public class ValidateBaGestOptions
             "Null",
         };
 
-    public ValidateOptionsResult Validate(string name, BaGestOptions options)
+    public ValidateOptionsResult Validate(string? name, BaGestOptions options)
     {
         var failures = new List<string>();
 
@@ -55,21 +55,21 @@ public class ValidateBaGestOptions
         if (options.Search == null) failures.Add($"The '{nameof(BaGestOptions.Search)}' config is required");
         if (options.Storage == null) failures.Add($"The '{nameof(BaGestOptions.Storage)}' config is required");
 
-        if (!ValidDatabaseTypes.Contains(options.Database?.Type))
+        if (!ValidDatabaseTypes.Contains(options.Database!.Type))
         {
             failures.Add(
                 $"The '{nameof(BaGestOptions.Database)}:{nameof(DatabaseOptions.Type)}' config is invalid. " +
                 $"Allowed values: {string.Join(", ", ValidDatabaseTypes)}");
         }
 
-        if (!ValidStorageTypes.Contains(options.Storage?.Type))
+        if (!ValidStorageTypes.Contains(options.Storage!.Type))
         {
             failures.Add(
                 $"The '{nameof(BaGestOptions.Storage)}:{nameof(StorageOptions.Type)}' config is invalid. " +
                 $"Allowed values: {string.Join(", ", ValidStorageTypes)}");
         }
 
-        if (!ValidSearchTypes.Contains(options.Search?.Type))
+        if (!ValidSearchTypes.Contains(options.Search!.Type))
         {
             failures.Add(
                 $"The '{nameof(BaGestOptions.Search)}:{nameof(SearchOptions.Type)}' config is invalid. " +

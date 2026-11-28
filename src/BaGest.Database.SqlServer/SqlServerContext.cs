@@ -18,7 +18,7 @@ public class SqlServerContext : AbstractContext<SqlServerContext>
     public SqlServerContext(DbContextOptions<SqlServerContext> efOptions, IOptionsSnapshot<BaGestOptions> bagestOptions)
         : base(efOptions)
     {
-        _bagestOptions = bagestOptions.Value.Database;
+        _bagestOptions = bagestOptions.Value.Database!;
     }
 
     /// <summary>

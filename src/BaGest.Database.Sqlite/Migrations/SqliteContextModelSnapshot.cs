@@ -24,6 +24,7 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Authors")
+                        .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("TEXT");
 
@@ -47,6 +48,7 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("TEXT");
 
@@ -121,6 +123,7 @@ namespace BaGest.Database.Sqlite.Migrations
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("BLOB");
 
@@ -163,10 +166,12 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("TargetFramework")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("VersionRange")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
@@ -186,6 +191,7 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("TEXT COLLATE NOCASE");
 
@@ -193,6 +199,7 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Version")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
@@ -212,6 +219,7 @@ namespace BaGest.Database.Sqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Moniker")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT COLLATE NOCASE");
 

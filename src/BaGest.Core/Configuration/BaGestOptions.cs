@@ -60,11 +60,11 @@ public class BaGestOptions
 
     public RetentionOptions? Retention { get; set; }
 
-    public DatabaseOptions Database { get; set; } = new();
+    public DatabaseOptions? Database { get; set; } = new();
 
-    public StorageOptions Storage { get; set; } = new();
+    public StorageOptions? Storage { get; set; } = new();
 
-    public SearchOptions Search { get; set; } = new();
+    public SearchOptions? Search { get; set; } = new();
 
     public MirrorOptions? Mirror { get; set; }
 

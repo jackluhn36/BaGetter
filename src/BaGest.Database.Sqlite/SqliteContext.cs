@@ -28,7 +28,7 @@ public class SqliteContext : AbstractContext<SqliteContext>
     public SqliteContext(DbContextOptions<SqliteContext> efOptions, IOptionsSnapshot<BaGestOptions> bagestOptions)
         : base(efOptions)
     {
-        _bagestOptions = bagestOptions.Value.Database;
+        _bagestOptions = bagestOptions.Value.Database!;
     }
 
     public override bool IsUniqueConstraintViolationException(DbUpdateException exception)

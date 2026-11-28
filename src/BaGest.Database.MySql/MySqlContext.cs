@@ -24,7 +24,7 @@ public class MySqlContext : AbstractContext<MySqlContext>
         IOptionsSnapshot<BaGestOptions> bagestOptions,
         MySqlServerVersionProvider serverVersionProvider) : base(efOptions)
     {
-        _bagestOptions = bagestOptions.Value.Database;
+        _bagestOptions = bagestOptions.Value.Database!;
         _serverVersionProvider = serverVersionProvider ?? throw new ArgumentNullException(nameof(serverVersionProvider));
     }
 
