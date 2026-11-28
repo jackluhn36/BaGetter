@@ -6,6 +6,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
+      nuget-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
       nuget-minor-patch:
         patterns:
           - "*"
@@ -19,6 +23,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
+      github-actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
       github-actions-minor-patch:
         patterns:
           - "*"
@@ -32,6 +40,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
+      docker-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
       docker-minor-patch:
         patterns:
           - "*"
@@ -45,6 +57,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
       npm-minor-patch:
         patterns:
           - "*"

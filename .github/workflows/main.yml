@@ -6,11 +6,9 @@ on:
     paths-ignore:
       - 'docs/**'
       - '*.md'
-  # Any base branch, so stacked pull requests are built as well.
+  # Any base branch, so stacked pull requests are built as well. No path filter:
+  # the required checks must report on every pull request, including docs-only ones.
   pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
   workflow_dispatch:
 
 concurrency:
@@ -44,3 +42,114 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --verbosity normal
+
+      - name: Check client libraries match libman.json
+        shell: bash
+        run: |
+          dotnet tool restore
+          rm -rf src/BaGest.Web/wwwroot/lib
+          (cd src/BaGest.Web && dotnet libman restore)
+          changes="$(git status --porcelain --untracked-files=all -- src/BaGest.Web/wwwroot/lib)"
+          if [ -n "$changes" ]; then
+            echo "::error::wwwroot/lib differs from what 'dotnet libman restore' produces:"
+            echo "$changes"
+            exit 1
+          fi
+
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: bagest-ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+      azurite:
+        image: mcr.microsoft.com/azure-storage/azurite:3.35.0
+        ports:
+          - 10002:10002
+
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-CU28-ubuntu-22.04
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: Bagest-ci-Pass1
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P Bagest-ci-Pass1 -Q 'SELECT 1'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 30
+
+    env:
+      BAGEST_TEST_MYSQL: Server=127.0.0.1;Port=3306;User ID=root;Password=bagest-ci
+      BAGEST_TEST_POSTGRES: Host=127.0.0.1;Port=5432;Username=postgres;Password=bagest-ci
+      BAGEST_TEST_SQLSERVER: Server=127.0.0.1,1433;User ID=sa;Password=Bagest-ci-Pass1;TrustServerCertificate=True
+      BAGEST_S3_ENDPOINT: http://127.0.0.1:9000
+      BAGEST_S3_ACCESS_KEY: bagest-ci
+      BAGEST_S3_SECRET_KEY: bagest-ci-secret
+      # Azurite's well-known development account, not a secret.
+      BAGEST_AZURE_TABLE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # Not a service container: a periodic healthcheck would open connections that the
+      # connection-counting MySQL test sees in the server-wide counter.
+      - name: Start MySQL
+        run: |
+          docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=bagest-ci mysql:8.4
+          for i in $(seq 1 60); do
+            docker exec mysql mysqladmin ping -h 127.0.0.1 -uroot -pbagest-ci --silent && exit 0
+            sleep 2
+          done
+          docker logs mysql
+          exit 1
+
+      # MinIO needs a command argument, which service containers cannot pass. The official minio images are no longer published, so use the Chainguard build.
+      - name: Start MinIO
+        run: |
+          docker run -d --name minio -p 9000:9000 \
+            -e MINIO_ROOT_USER="$BAGEST_S3_ACCESS_KEY" \
+            -e MINIO_ROOT_PASSWORD="$BAGEST_S3_SECRET_KEY" \
+            cgr.dev/chainguard/minio@sha256:db0a8831be706cbfd9dcf6c3ee6011db96c0b86023a20a34a6450cc6e8d7103a server /data
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:9000/minio/health/ready && exit 0
+            sleep 2
+          done
+          docker logs minio
+          exit 1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Integration tests
+        run: |
+          status=0
+          for project in \
+            tests/BaGest.Database.MySql.Tests \
+            tests/BaGest.Database.PostgreSql.Tests \
+            tests/BaGest.Database.SqlServer.Tests \
+            tests/BaGest.Aws.Tests \
+            tests/BaGest.Azure.Tests; do
+            dotnet test "$project" --no-build --verbosity normal || status=1
+          done
+          exit $status

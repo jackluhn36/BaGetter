@@ -29,6 +29,7 @@ public class SearchController : Controller
         // These are unofficial parameters
         [FromQuery]string packageType = null,
         [FromQuery]string framework = null,
+        [FromQuery]string sortBy = null,
         CancellationToken cancellationToken = default)
     {
         var request = new SearchRequest
@@ -40,6 +41,7 @@ public class SearchController : Controller
             PackageType = packageType,
             Framework = framework,
             Query = query ?? string.Empty,
+            SortOrder = SearchSortOrders.Parse(sortBy),
         };
 
         return await _searchService.SearchAsync(request, cancellationToken);

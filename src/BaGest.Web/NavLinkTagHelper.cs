@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace BaGest.Web;
@@ -20,9 +22,12 @@ public class NavLinkTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        output.Attributes.RemoveAll("nav-link");
+
         if (IsActiveLink())
         {
-            output.Attributes.SetAttribute("class", "active");
+            output.AddClass("active", HtmlEncoder.Default);
+            output.Attributes.SetAttribute("aria-current", "page");
         }
     }
 

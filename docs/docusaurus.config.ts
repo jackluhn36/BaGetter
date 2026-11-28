@@ -22,8 +22,13 @@ const config: Config = {
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
   onBrokenAnchors: 'throw',
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -44,6 +49,7 @@ const config: Config = {
           editUrl:
             'https://github.com/BeerSolutions/BaGest/tree/main/docs',
         },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },

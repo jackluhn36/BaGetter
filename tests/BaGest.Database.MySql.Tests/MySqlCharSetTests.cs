@@ -57,9 +57,15 @@ public class MySqlCharSetTests : IAsyncLifetime
         await using (var context = _database.CreateContext())
         {
             await context.GetService<IMigrator>().MigrateAsync(LastLatin1Migration);
-            context.Packages.Add(CreatePackage("Existing.Package", "1.0.0", [Latin1Author], Latin1Text));
-            await context.SaveChangesAsync();
         }
+
+        // Inserted with SQL because the current model has columns the pre-upgrade schema does not have yet.
+        await _database.ExecuteAsync($"""
+            INSERT INTO Packages (Id, Version, OriginalVersion, Authors, Description, Tags,
+                Published, Listed, Downloads, HasEmbeddedIcon, HasReadme, IsPrerelease, RequireLicenseAcceptance, SemVerLevel)
+            VALUES ('Existing.Package', '1.0.0', '1.0.0', '["{Latin1Author}"]', '{Latin1Text}', '',
+                UTC_TIMESTAMP(6), 1, 0, 0, 0, 0, 0, 0)
+            """);
 
         await using (var context = _database.CreateContext())
         {

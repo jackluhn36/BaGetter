@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\Search\DatabaseSearchServiceFacts.cs" Link="Shared\Search\DatabaseSearchServiceFacts.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xunit.SkippableFact" />
   </ItemGroup>
 

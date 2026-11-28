@@ -11,6 +11,10 @@ using Microsoft.Extensions.Options;
 
 namespace BaGest.Azure
 {
+    /// <summary>
+    /// Searches packages stored in Azure Table Storage. Results are returned in the order the table stores
+    /// them: <see cref="SearchRequest.SortOrder"/> is ignored, as nuget.org ignores sort orders it does not know.
+    /// </summary>
     public class TableSearchService : ISearchService
     {
         private readonly TableClient _table;

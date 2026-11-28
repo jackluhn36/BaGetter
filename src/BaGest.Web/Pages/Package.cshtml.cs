@@ -17,6 +17,9 @@ public class PackageModel : PageModel
 {
     private static readonly MarkdownPipeline MarkdownPipeline;
 
+    // Release notes are often plain text, where each line break is meant to show.
+    private static readonly MarkdownPipeline ReleaseNotesPipeline;
+
     private readonly IPackageService _packages;
     private readonly IPackageContentService _content;
     private readonly ISearchService _search;
@@ -26,6 +29,11 @@ public class PackageModel : PageModel
     {
         MarkdownPipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
+            .Build();
+
+        ReleaseNotesPipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseSoftlineBreakAsHardlineBreak()
             .Build();
     }
 
@@ -259,8 +267,8 @@ public class PackageModel : PageModel
             return HtmlString.Empty;
         }
 
-        var releseNotesHtml = Markdown.ToHtml(Package.ReleaseNotes, MarkdownPipeline);
-        return new HtmlString(releseNotesHtml);
+        var releaseNotesHtml = Markdown.ToHtml(Package.ReleaseNotes, ReleaseNotesPipeline);
+        return new HtmlString(releaseNotesHtml);
     }
 
     public class DependencyGroupModel

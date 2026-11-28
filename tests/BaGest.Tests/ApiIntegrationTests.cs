@@ -1,9 +1,11 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BaGest.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -105,6 +107,67 @@ public class ApiIntegrationTests : IDisposable
     }
 
     [Fact]
+    public async Task SearchMatchesDescription()
+    {
+        await _app.AddPackageAsync(_packageStream);
+
+        using var response = await _client.GetAsync("v3/search?q=description");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(1, await GetTotalHitsAsync(response));
+    }
+
+    [Theory]
+    [InlineData("description%20TestData", 1)]
+    [InlineData("description%20PackageDoesNotExist", 0)]
+    public async Task SearchRequiresAllKeywords(string query, int totalHits)
+    {
+        await _app.AddPackageAsync(_packageStream);
+
+        using var response = await _client.GetAsync($"v3/search?q={query}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(totalHits, await GetTotalHitsAsync(response));
+    }
+
+    [Fact]
+    public async Task SearchWithManyKeywordsReturnsOk()
+    {
+        var query = string.Join("%20", Enumerable.Repeat("test", 1000));
+
+        using var response = await _client.GetAsync($"v3/search?q={query}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Theory]
+    [InlineData("title-desc")]
+    [InlineData("TITLE-DESC")]
+    public async Task SearchSortsBySortByParameter(string sortBy)
+    {
+        await AddTwoPackagesAsync();
+
+        using var response = await _client.GetAsync($"v3/search?sortBy={sortBy}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(["TestData", "Another.Package"], await GetPackageIdsAsync(response));
+    }
+
+    [Theory]
+    [InlineData("relevance")]
+    [InlineData("unknown")]
+    public async Task SearchWithDefaultSortByMatchesSearchWithout(string sortBy)
+    {
+        await AddTwoPackagesAsync();
+
+        using var withoutSortBy = await _client.GetAsync("v3/search");
+        using var withSortBy = await _client.GetAsync($"v3/search?sortBy={sortBy}");
+
+        Assert.Equal(HttpStatusCode.OK, withSortBy.StatusCode);
+        Assert.Equal(await withoutSortBy.Content.ReadAsStringAsync(), await withSortBy.Content.ReadAsStringAsync());
+    }
+
+    [Fact]
     public async Task AutocompleteReturnsOk()
     {
         await _app.AddPackageAsync(_packageStream);
@@ -140,6 +203,17 @@ public class ApiIntegrationTests : IDisposable
   ""totalHits"": 0,
   ""data"": []
 }", json);
+    }
+
+    [Fact]
+    public async Task AutocompleteDoesNotMatchDescription()
+    {
+        await _app.AddPackageAsync(_packageStream);
+
+        using var response = await _client.GetAsync("v3/autocomplete?q=description");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(0, await GetTotalHitsAsync(response));
     }
 
     [Fact]
@@ -467,18 +541,42 @@ public class ApiIntegrationTests : IDisposable
         _client.Dispose();
     }
 
-    private static MemoryStream CreatePackage(string metadata)
+    private static async Task<int> GetTotalHitsAsync(HttpResponseMessage response)
+    {
+        using var json = JsonDocument.Parse(await response.Content.ReadAsStreamAsync());
+        return json.RootElement.GetProperty("totalHits").GetInt32();
+    }
+
+    private async Task AddTwoPackagesAsync()
+    {
+        await _app.AddPackageAsync(_packageStream);
+        await _app.AddPackageAsync(CreatePackage(
+            "<authors>Test author</authors><description>Another description</description>",
+            id: "Another.Package"));
+    }
+
+    private static async Task<string[]> GetPackageIdsAsync(HttpResponseMessage response)
+    {
+        using var json = JsonDocument.Parse(await response.Content.ReadAsStreamAsync());
+        return json.RootElement
+            .GetProperty("data")
+            .EnumerateArray()
+            .Select(result => result.GetProperty("id").GetString())
+            .ToArray();
+    }
+
+    private static MemoryStream CreatePackage(string metadata, string id = "Invalid.Manifest")
     {
         var nuspec =
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
             + "<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">"
-            + "<metadata><id>Invalid.Manifest</id><version>1.0.0</version>" + metadata + "</metadata>"
+            + $"<metadata><id>{id}</id><version>1.0.0</version>" + metadata + "</metadata>"
             + "</package>";
 
         var stream = new MemoryStream();
         using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true))
         {
-            using var writer = new StreamWriter(archive.CreateEntry("Invalid.Manifest.nuspec").Open());
+            using var writer = new StreamWriter(archive.CreateEntry($"{id}.nuspec").Open());
             writer.Write(nuspec);
         }
 

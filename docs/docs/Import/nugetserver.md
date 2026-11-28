@@ -17,7 +17,7 @@ $source = "<NuGet.Server package source>"
 $destination = "<BaGest package source>"
 ```
 
-If you've [configured BaGest to require an API Key](https://beersolutions.github.io/BaGest/docs/configuration/#requiring-an-api-key), set it using [the `setapikey` command](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-setapikey):
+If you've [configured BaGest to require an API Key](https://beersolutions.github.io/BaGest/docs/configuration#requiring-an-api-key), set it using [the `setapikey` command](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-setapikey):
 
 ```powershell
 & nuget.exe setapikey "MY-API-KEY" -Source $destination

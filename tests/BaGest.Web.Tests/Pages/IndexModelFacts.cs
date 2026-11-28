@@ -38,6 +38,7 @@ public class IndexModelFacts
         Assert.Null(_capturedRequest.PackageType);
         Assert.Null(_capturedRequest.Framework);
         Assert.Null(_capturedRequest.Query);
+        Assert.Equal(SearchSortOrder.Relevance, _capturedRequest.SortOrder);
     }
 
     [Fact]
@@ -58,5 +59,18 @@ public class IndexModelFacts
         Assert.Equal("foo", _capturedRequest.PackageType);
         Assert.Equal("bar", _capturedRequest.Framework);
         Assert.Equal("Hello world", _capturedRequest.Query);
+    }
+
+    [Theory]
+    [InlineData("totalDownloads-desc", SearchSortOrder.TotalDownloadsDescending)]
+    [InlineData("CREATED-DESC", SearchSortOrder.CreatedDescending)]
+    [InlineData("unknown", SearchSortOrder.Relevance)]
+    public async Task PassesSortOrder(string sortBy, SearchSortOrder expected)
+    {
+        _target.SortBy = sortBy;
+
+        await _target.OnGetAsync(_cancellation);
+
+        Assert.Equal(expected, _capturedRequest.SortOrder);
     }
 }

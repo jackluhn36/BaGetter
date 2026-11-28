@@ -1,94 +1,90 @@
+
 @using BaGest.Web.Extensions
-@using BaGest.Web.Helper
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using Microsoft.Extensions.Options
 
 @inject IOptions<StatisticsOptions> StatisticsOptions
 @inject ApplicationVersion Version
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="BaGet">
-    <meta name="author" content="@Version.Authors">
-    @Html.AddReleaseMetaTags()
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="BaGest">
+        <meta name="author" content="@Version.Authors">
+        @Html.AddReleaseMetaTags()
 
-    <link rel="shortcut icon" href="~/_content/BaGest.Web/favicon.ico">
+        <link rel="shortcut icon" href="~/_content/BaGest.Web/favicon.ico">
 
-    <link rel="stylesheet" href="~/_content/BaGest.Web/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/_content/BaGest.Web/lib/office-ui-fabric-core/dist/css/fabric.min.css" />
-    <link rel="stylesheet" href="~/_content/BaGest.Web/css/site.css" />
+        <link rel="stylesheet" href="~/_content/BaGest.Web/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/_content/BaGest.Web/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+        <link rel="stylesheet" href="~/_content/BaGest.Web/css/site.css" />
 
-    <title>@ViewData["Title"] - BaGest</title>
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-inverse" role="navigation">
-            <div class="container">
-                <div class="row">
-                    <div id="navbar" class="col-sm-12">
-                        <ul class="nav navbar-nav" role="tablist">
-                            <li role="presentation"><a asp-area="" asp-page="/Index" role="tab" nav-link><span>Packages</span></a></li>
-                            <li role="presentation"><a asp-area="" asp-page="/Upload" role="tab" nav-link><span>Upload</span></a></li>
+        <title>@ViewData["Title"] - BaGest</title>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container flex-wrap">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation" aria-controls="main-navigation" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse order-last order-lg-0" id="main-navigation">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a nav-link asp-area="" asp-page="/Index" class="nav-link"><span>Packages</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a nav-link asp-area="" asp-page="/Upload" class="nav-link"><span>Upload</span></a>
+                            </li>
                             @if (StatisticsOptions.Value.EnableStatisticsPage)
                             {
-                                <li role="presentation"><a asp-area="" asp-page="/Statistics" role="tab" nav-link><span>Statistics</span></a></li>
+                                <li class="nav-item">
+                                    <a nav-link asp-area="" asp-page="/Statistics" class="nav-link"><span>Statistics</span></a>
+                                </li>
                             }
-                            <li role="presentation">
-                                <a role="tab" href="https://beersolutions.github.io/BaGest/docs" target="_blank" rel="noopener noreferrer">
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://beersolutions.github.io/BaGest/docs" target="_blank" rel="noopener noreferrer">
                                     <span>Documentation</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                </div>
-            </div>
-            <div class="container search-container">
-                <div class="row">
-                    <form class="col-sm-12" action="@Url.Page("/Index")" method="get">
+
+                    <form class="search-form d-flex" action="@Url.Page("/Index")" method="get" role="search">
                         <div class="input-group">
                             <input type="text"
-                                   name="q"
-                                   value="@ViewData["SearchQuery"]"
-                                   class="form-control"
-                                   autoComplete="off"
-                                   placeholder="Search packages..." />
-
-                            <span class="input-group-btn">
-                                <button type="submit"
-                                        class="btn btn-default"
-                                        title="Search for packages">
-                                    <span class="ms-Icon ms-Icon--Search" aria-hidden="true"></span>
-                                </button>
-                            </span>
+                                name="q"
+                                value="@ViewData["SearchQuery"]"
+                                class="form-control"
+                                autoComplete="off"
+                                placeholder="Search packages..." />
+                            <button type="submit" class="btn" title="Search for packages">
+                                <span class="bi bi-search" aria-hidden="true"></span>
+                            </button>
                         </div>
-
+                        
                         @await RenderSectionAsync("SearchForm", required: false)
                     </form>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    <main role="main" class="container main-container">
-        @RenderBody()
-    </main>
+        <main role="main" class="container main-container">
+            @RenderBody()
+        </main>
 
-    <footer class="footer">
-        <p>
-            Version: @Version.Version
-        </p>
-        @Html.AddReleaseInformationAsComment()
-    </footer>
+        <footer class="footer">
+            <p>
+                Version: @Version.Version
+            </p>
+            @Html.AddReleaseInformationAsComment()
+        </footer>
 
-    <script src="~/_content/BaGest.Web/lib/alpinejs/dist/alpine.js"></script>
+        <script defer src="~/_content/BaGest.Web/lib/alpinejs/dist/cdn.min.js"></script>
+        <script src="~/_content/BaGest.Web/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/_content/BaGest.Web/js/site.js" asp-append-version="true"></script>
 
-    <script src="~/_content/BaGest.Web/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/_content/BaGest.Web/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/_content/BaGest.Web/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

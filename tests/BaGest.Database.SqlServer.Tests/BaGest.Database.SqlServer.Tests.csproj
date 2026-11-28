@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BaGest.Database.SqlServer\BaGest.Database.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\Search\DatabaseSearchServiceFacts.cs" Link="Shared\Search\DatabaseSearchServiceFacts.cs" />
+    <Compile Include="..\Shared\Support\StaticOptionsSnapshot.cs" Link="Shared\Support\StaticOptionsSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xunit.SkippableFact" />
+  </ItemGroup>
+
+</Project>

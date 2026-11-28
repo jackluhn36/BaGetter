@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\Search\DatabaseSearchServiceFacts.cs" Link="Shared\Search\DatabaseSearchServiceFacts.cs" />
+    <Compile Include="..\Shared\Support\StaticOptionsSnapshot.cs" Link="Shared\Support\StaticOptionsSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xunit.SkippableFact" />
     <PackageReference Update="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>

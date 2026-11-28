@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit.Abstractions;
@@ -32,6 +33,18 @@ public class BaGestApplication : WebApplicationFactory<Startup>
         _output = output ?? throw new ArgumentNullException(nameof(output));
         _upstreamClient = upstreamClient;
         this._inMemoryConfiguration = inMemoryConfiguration;
+    }
+
+    protected override IHost CreateHost(IHostBuilder builder)
+    {
+        // Each host would otherwise watch its configuration files for changes. The tests create a host per
+        // test, and the watchers they leave open exhaust the inotify instances a Linux user may have (128 by default).
+        builder.ConfigureHostConfiguration(config => config.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            { "hostBuilder:reloadConfigOnChange", "false" },
+        }));
+
+        return base.CreateHost(builder);
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

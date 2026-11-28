@@ -9,17 +9,17 @@
     var serviceIndexUrl = _url.GetServiceIndexUrl();
 }
 
-<div class="col-sm-12">
+<div class="col-12">
     <h1>Upload</h1>
     <hr class="breadcrumb-divider" />
 
     <div>You can push packages using the service index <code>@serviceIndexUrl</code>.</div>
 
-    <div class="tabbed-info" x-data="{ tabs: tabs, active: tabs[0] }">
-        <ul class="nav">
+    <div class="tabbed-info mt-4" x-data="{ tabs: tabs, active: tabs[0] }">
+        <ul class="nav nav-tabs">
             <template x-for="tab in tabs" :key="tab.name">
-                <li x-bind:class="{ 'active': active.name === tab.name }">
-                    <a href="#" x-text="tab.name" @@click="active = tab"></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" x-bind:class="{ 'active': active.name === tab.name }" x-text="tab.name" @@click="active = tab"></a>
                 </li>
             </template>
         </ul>
@@ -32,13 +32,14 @@
             </div>
 
             <div class="copy-button">
-                <button class="btn btn-default btn-warning"
+                <button class="btn btn-outline-warning btn-sm"
                         type="button"
-                        data-tottle="popover"
-                        data-placement="bottom"
-                        data-content="Copied"
+                        aria-label="Copy"
+                        data-bs-toggle="popover"
+                        data-bs-placement="bottom"
+                        data-bs-content="Copied"
                         @@click="window.baget.copyTextToClipboard(active.content.join('\n'), $el)">
-                    <i class="ms-Icon ms-Icon--Copy"></i>
+                    <i class="bi bi-copy" aria-hidden="true"></i>
                 </button>
             </div>
         </div>

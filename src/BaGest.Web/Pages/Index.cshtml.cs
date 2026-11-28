@@ -37,6 +37,14 @@ public class IndexModel : PageModel
     [BindProperty(SupportsGet = true)]
     public bool Prerelease { get; set; } = true;
 
+    /// <summary>
+    /// The order of the results, as a <c>sortBy</c> value of the search API. See <see cref="SearchSortOrders"/>.
+    /// </summary>
+    [BindProperty(SupportsGet = true)]
+    public string SortBy { get; set; }
+
+    public SearchSortOrder SortOrder => SearchSortOrders.Parse(SortBy);
+
     public IReadOnlyList<SearchResult> Packages { get; private set; }
 
     public async Task<IActionResult> OnGetAsync(CancellationToken cancellationToken)
@@ -56,6 +64,7 @@ public class IndexModel : PageModel
                 PackageType = packageType,
                 Framework = framework,
                 Query = Query,
+                SortOrder = SortOrder,
             },
             cancellationToken);
 

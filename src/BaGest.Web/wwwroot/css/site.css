@@ -14,6 +14,8 @@
   --search-button-border-color: #bf6f00;
   --search-button-hover-bg-color: #a56000;
   --search-button-hover-border-color: #814b00;
+  /* Borders of the search filter controls */
+  --control-border-color: #002b4d;
   /* Alerts */
   --alert-warning-bg-color: #fff4ce;
   --alert-warning-border-color: #fff4ce;
@@ -29,12 +31,17 @@
   --copy-button-border-color: #bf6f00;
   --copy-button-hover-bg-color: #a56000;
   --copy-button-hover-border-color: #814b00;
+  /* Links (Bootstrap reads the -rgb variants for plain links) */
+  --bs-link-color: #337ab7;
+  --bs-link-color-rgb: 51, 122, 183;
+  --bs-link-hover-color: #23527c;
+  --bs-link-hover-color-rgb: 35, 82, 124;
   /* Package Page */
   --link-button-color: #337ab7;
   --package-details-tag-bg-color: #eff9ff;
   --package-used-by-border-color: #d3d3d3;
   --versions-table-bg-color-current: #d9edf7;
-  --versions-table-bg-color: --body-bg-color;
+  --versions-table-bg-color: var(--body-bg-color);
   /* Upload page */
   --code-bg-color: #f9f2f4;
   --code-text-color: #c7254e;
@@ -58,6 +65,8 @@
     --search-button-border-color: #e68900;
     --search-button-hover-bg-color: #cc7a00;
     --search-button-hover-border-color: #b36b00;
+    /* Borders of the search filter controls (at least 3:1 against the page) */
+    --control-border-color: #777;
     /* Alerts */
     --alert-warning-bg-color: #333;
     --alert-warning-border-color: #333;
@@ -78,17 +87,21 @@
     --package-details-tag-bg-color: #444;
     --package-used-by-border-color: #555;
     --versions-table-bg-color-current: #333;
-    --versions-table-bg-color: --body-bg-color;
+    --versions-table-bg-color: var(--body-bg-color);
     /* Upload page */
     --code-bg-color: #2d2d2d;
     --code-text-color: #e06c75;
   }
-}
 
+  /* Bootstrap muted text (.text-muted) on the dark page backgrounds. Scoped to
+     the page content: the header search box keeps a white background. */
+  .main-container {
+    --bs-secondary-color: #b5b5b5;
+  }
+}
 
 /* Layout
 -------------------------------------------------- */
-
 html {
   height: 100%;
 }
@@ -112,41 +125,27 @@ main {
 .footer {
   flex-shrink: 0;
   background-color: var(--footer-bg-color);
-  color: var(--footer-text-color)
+  color: var(--footer-text-color);
 }
 
 .footer p {
-  text-align: center;    
-  vertical-align: middle;    
+  text-align: center;
+  vertical-align: middle;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
   font-weight: 100;
   line-height: 1.1;
   color: inherit;
 }
 
-h1,
-h2,
-h3,
-p {
+h1, h2, h3, p {
   margin-bottom: 24px;
 }
 
-h1 {
-  margin-top: 15px;
-}
-
-h2,
-h3 {
-  margin-top: 40px;
-}
+h1 { margin-top: 15px; }
+h2, h3 { margin-top: 40px; }
 
 h4 {
   margin-top: 11px;
@@ -154,25 +153,39 @@ h4 {
   font-size: 20px;
 }
 
+/* Plain links are underlined only on hover or focus. Links styled by a
+   component class (nav links, dropdown items, buttons) keep their own look. */
+a:not([class]) {
+  text-decoration: none;
+}
+
+a:not([class]):hover,
+a:not([class]):focus {
+  text-decoration: underline;
+}
+
+/* BS5 Support for legacy class */
 .img-responsive {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-.ms-Icon-ul {
+.icon-list {
   margin-left: 24px;
 }
 
-.ms-Icon-ul li {
+.icon-list li {
   position: relative;
 }
 
-.ms-Icon-ul li i.ms-Icon {
+.icon-list li i.bi {
   position: absolute;
   left: -24px;
 }
 
+/* Alerts
+-------------------------------------------------- */
 .alert {
   padding: 8px 8px;
   border: 1px solid transparent;
@@ -199,7 +212,7 @@ h4 {
   align-items: flex-start;
 }
 
-.deprecation-header .ms-Icon--Warning {
+.deprecation-header .bi {
   font-size: 20px;
   margin-top: 2px;
 }
@@ -224,85 +237,67 @@ h4 {
 
 /* Navigation
 -------------------------------------------------- */
-#navbar ul {
-  margin-left: -15px;
-}
-
-.navbar-inverse {
-  background-color: var(--navbar-bg-color);
-  border-color: var(--navbar-border-color);
-}
-
 .navbar {
+  margin-bottom: 20px;
   border-radius: 0;
+  /* IMPORTANT: Overrides bg-dark from Layout.cshtml so the variable takes effect */
+  background-color: var(--navbar-bg-color) !important; 
+  border-bottom: 1px solid var(--navbar-border-color);
 }
 
-.navbar-inverse .navbar-nav > li > a {
+.navbar-nav .nav-link {
   font-weight: 100;
-  color: var(--navbar-text-color);
-}
-
-.navbar-nav > li > a {
-  line-height: 22px;
-}
-
-.navbar-inverse .navbar-nav a.active {
-  color: var(--navbar-active-text-color);
-}
-
-.navbar-inverse .navbar-nav a.active,
-.navbar-inverse .navbar-nav a.active:hover,
-.navbar-inverse .navbar-nav a.active:focus {
-  background-color: transparent;
-}
-
-.navbar-inverse .navbar-nav > .active > a:hover {
-  color: #fff;
-}
-
-.navbar-inverse .navbar-nav a.active span {
-  padding: 5px 0;
-  border-bottom: 1px solid #fff;
-}
-
-.nav > li {
-  position: relative;
-  display: block;
-}
-
-.nav > li > a {
-  position: relative;
-  display: block;
+  color: var(--navbar-text-color) !important;
   padding: 10px 15px;
 }
 
-.search-container {
-  padding-top: 16px;
-  padding-bottom: 16px;
+/* In the expanded menu, pull the links left by their padding so the first
+   label lines up with the page content below. */
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav {
+    margin-left: calc(-1 * var(--bs-navbar-nav-link-padding-x));
+  }
 }
 
-.search-container .form-control {
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: var(--navbar-active-text-color) !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--navbar-active-text-color) !important;
+  background-color: transparent;
+}
+
+/* Underline only the label, so the line does not span the whole row of the
+   expanded menu on small screens. */
+.navbar-nav .nav-link.active span {
+  padding: 5px 0;
+  border-bottom: 1px solid var(--navbar-active-text-color);
+}
+
+/* Search
+-------------------------------------------------- */
+/* The search box in the navigation bar: square corners and a solid
+   orange button with a white icon. */
+.search-form .form-control {
   border-radius: 0;
 }
 
-  .search-container button {
-    height: 34px;
-    color: #fff;
-    background-color: var(--search-button-bg-color);
-    border-color: var(--search-button-border-color);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .search-container button:active,
-  .search-container button:active:focus,
-  .search-container button:active:hover,
-  .search-container button:focus,
-  .search-container button:hover {
-    background-color: var(--search-button-hover-bg-color);
-    border-color: var(--search-button-hover-border-color);
-    color: #fff;
-  }
+.search-form .btn {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--search-button-bg-color);
+  --bs-btn-border-color: var(--search-button-border-color);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--search-button-hover-bg-color);
+  --bs-btn-hover-border-color: var(--search-button-hover-border-color);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--search-button-hover-bg-color);
+  --bs-btn-active-border-color: var(--search-button-hover-border-color);
+  /* The plain .btn has no focus ring color; without one keyboard focus is invisible. */
+  --bs-btn-focus-shadow-rgb: 216, 126, 0;
+  border-radius: 0;
+}
 
 /* Index page
 -------------------------------------------------- */
@@ -310,18 +305,8 @@ h4 {
   margin-bottom: 20px;
 }
 
-.search-options span.ms-Checkbox-text {
-  font-weight: bold;
-  font-size: 16px;
-}
-
 .search-options .form-group {
   margin-right: 10px;
-}
-
-.search-options select,
-.search-options #prerelease {
-  margin-left: 10px;
 }
 
 .search-dropdown {
@@ -343,141 +328,106 @@ h4 {
   margin-right: 5px;
 }
 
+/* Every item has a separator on its left. The list is pulled left by the
+   width of a separator plus its padding and that strip is clipped, so the
+   first item of each row (also after wrapping) shows no separator. */
 .search-result .info {
   padding-left: 0;
   margin-top: 8px;
   margin-bottom: 8px;
-  margin-left: -5px;
+  margin-left: -11px;
+  column-gap: 10px;
   line-height: 22px;
   color: #666;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.search-result .info span:not(:first-child) {
-  padding-left: 10px;
+  clip-path: inset(0 0 0 11px);
 }
 
 .search-result .info li {
-  display: inline;
-}
-
-.search-result .info li + li {
   padding-left: 10px;
-  margin-left: 10px;
-  border-color: #dbdbdb;
-  border-width: 1px;
-  border-left-style: solid;
+  border-left: 1px solid var(--package-used-by-border-color);
 }
 
-.search-result .ms-Icon {
+.search-result .bi {
   position: relative;
   top: 2px;
   margin-right: 2px;
 }
 
-.search-result .tags {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Tabbed instructions, used on upload and package page
+/* Tabbed instructions (BS5 Flexbox Update)
 -------------------------------------------------- */
 .tabbed-info {
   font-size: 0.8em;
   margin-top: 15px;
 }
 
-.tabbed-info ul {
-  margin-left: 0;
-  margin-bottom: 0;
-  padding-left: 0;
-  list-style: none;
+/* The tabs sit directly on the command box; on narrow screens they wrap
+   with the same spacing between rows as between tabs. */
+.tabbed-info .nav-tabs {
+  gap: 5px;
+  border-bottom: none;
+}
+
+.tabbed-info .nav-link {
+  padding: 5px 10px;
+  margin: 0;
+  line-height: 1.42857143;
+  color: var(--tabbed-info-inactive-text-color);
+  background-color: var(--tabbed-info-bg-color);
   border: 0;
-  width: 750px;
+  border-radius: 0;
 }
 
-.tabbed-info li {
-  padding: 0;
-  margin-right: 5px;
-  margin-bottom: 0;
-  float: left;
-  position: relative;
-  display: block;
+.tabbed-info .nav-link:hover {
+  border-color: transparent;
 }
 
-  .tabbed-info li a {
-    padding: 5px 10px;
-    margin: 0;
-    color: #000;
-    background-color: var(--tabbed-info-bg-color);
-    color: var(--tabbed-info-inactive);
-    border: 0;
-    position: relative;
-    display: block;
-    text-decoration: none;
-  }
+.tabbed-info .nav-link.active {
+  font-weight: 600;
+  color: var(--tabbed-info-active-text-color) !important;
+  background-color: var(--tabbed-info-active-bg-color) !important;
+  text-decoration: underline;
+}
 
-  .tabbed-info li.active a {
-    font-weight: 600;
-    color: var(--tabbed-info-active-text-color);
-    text-decoration: underline;
-    background-color: var(--tabbed-info-active-bg-color);
-  }
-
+/* Flexbox for the code block */
 .tabbed-info .content {
-  display: table;
-  height: 1px;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
 }
 
-  .tabbed-info .content .script {
-    display: table-cell;
-    width: 100%;
-    max-width: 1px;
-    padding: 0 10px 8px 10px;
-    font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
-    line-height: 1.5;
-    color: var(--tabbed-info-script-text-color);
-    background-color: var(--tabbed-info-script-bg-color);
-    border-color: #002440;
-    border-style: solid;
-    border-width: 1px 0 1px 1px;
-  }
+.tabbed-info .content .script {
+  flex-grow: 1;
+  padding: 10px;
+  font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+  line-height: 1.5;
+  color: var(--tabbed-info-script-text-color);
+  background-color: var(--tabbed-info-script-bg-color);
+  border: 1px solid var(--tabbed-info-script-bg-color);
+  border-right: none;
+  overflow-x: auto;
+}
 
 .tabbed-info .content .script .script-line:before {
   content: "> ";
 }
 
 .tabbed-info .content .copy-button {
-  display: table-cell;
+  display: flex;
 }
 
 .tabbed-info .content .copy-button button {
-  height: 100%;
-  min-height: 42px;
-  vertical-align: baseline;
-  border-radius: 0px;
-}
-
-.copy-button button {
+  border-radius: 0;
+  min-height: 100%;
   color: #fff;
   background-color: var(--copy-button-bg-color);
   border-color: var(--copy-button-border-color);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
-  .copy-button button:active,
-  .copy-button button:active:focus,
-  .copy-button button:active:hover,
-  .copy-button button:focus,
-  .copy-button button:hover {
-    background-color: var(--copy-button-hover-bg-color);
-    border-color: var(--copy-button-hover-border-color);
-    color: #fff;
-  }
+.tabbed-info .content .copy-button button:hover {
+  background-color: var(--copy-button-hover-bg-color);
+  border-color: var(--copy-button-hover-border-color);
+}
 
 /* Package page
 -------------------------------------------------- */
@@ -487,6 +437,7 @@ h4 {
 
 @media screen and (max-width: 768px) {
   .display-package .package-icon img {
+    display: block;
     margin-left: auto;
     margin-right: auto;
     max-height: 60px;
@@ -516,15 +467,17 @@ h4 {
   max-width: 100%;
 }
 
-.display-package .package-release-notes {
-  white-space: pre-wrap;
+/* Next to the package details, pull the sidebar up so its first heading
+   lines up with the package title. Once the columns stack, the sidebar
+   follows the details, and pulling it up would lay it over the end of the
+   version list and block the "Show more" button. */
+@media (min-width: 576px) {
+  .package-details-info {
+    margin-top: -25px;
+  }
 }
 
-.package-details-info {
-  margin-top: -25px;
-}
-
-.package-details-info .ms-Icon-ul li {
+.package-details-info .icon-list li {
   margin-bottom: 15px;
 }
 
@@ -536,19 +489,20 @@ h4 {
   margin-top: 3px;
 }
 
-  .package-details-info .tag {
-    background-color: var(--package-details-tag-bg-color);
-    padding: 2px 10px;
-    line-height: 2em;
-    margin: 0 2px;
-  }
+/* Tags are flat chips in the size of the surrounding text. */
+.package-details-info .tag {
+  background-color: var(--package-details-tag-bg-color);
+  padding: 2px 10px;
+  line-height: 2em;
+  margin: 0 2px;
+}
 
 .display-package .expandable-section h2 button {
   color: var(--text-color);
   text-decoration: none;
 }
 
-.display-package .expandable-section h2 .ms-Icon {
+.display-package .expandable-section h2 .bi {
   font-size: 0.6em;
   position: relative;
   top: -2px;
@@ -561,21 +515,20 @@ h4 {
 }
 
 .display-package .package-used-by thead tr {
-  border-bottom: 2px solid #d3d3d3;
-  border-color: var(--package-used-by-border-color);
+  border-bottom: 2px solid var(--package-used-by-border-color);
 }
 
 .display-package .package-used-by tbody tr {
-  border-bottom: 1px solid #d3d3d3;
-  border-color: var(--package-used-by-border-color);
+  border-bottom: 1px solid var(--package-used-by-border-color);
 }
 
-.display-package .package-used-by td div {
-  margin-top: 4px;
+/* Rows of the version table are separated by lines, the header by a heavier one. */
+.display-package .version-list .table {
+  --bs-table-border-color: var(--package-used-by-border-color);
 }
 
-.display-package .package-used-by td span {
-  margin-left: 3px;
+.display-package .version-list thead th {
+  border-bottom-width: 2px;
 }
 
 .dependency-groups h4 {
@@ -583,27 +536,14 @@ h4 {
 }
 
 .dependency-groups h4 > span {
-  border-bottom: 1px solid #d8d8d8;
+  border-bottom: 1px solid var(--package-used-by-border-color);
   margin-bottom: 3px;
 }
 
 .dependency-group li span {
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.8;
 }
-
-.display-package .version-list .ms-Icon {
-  position: relative;
-  top: 2px;
-  margin-right: 5px;
-}
-
-.display-package .version-list tbody {
-  background-color: var(--versions-table-bg-color);
-}
-
-  .display-package .version-list tbody .bg-info {
-    background-color: var(--versions-table-bg-color-current);
-  }
 
 .link-button {
   background-color: transparent;
@@ -616,16 +556,108 @@ h4 {
   color: var(--link-button-color);
 }
 
-  .link-button:hover,
-  .link-button:focus {
-    outline: none;
-    text-decoration: underline;
-    color: #23527c;
-  }
+.link-button:hover,
+.link-button:focus {
+  outline: none;
+  text-decoration: underline;
+  color: #23527c;
+}
 
 /* Upload page
 -------------------------------------------------- */
 code {
   background-color: var(--code-bg-color);
   color: var(--code-text-color);
+}
+
+/* BS5 Overrides for Dark Mode / Dropdowns & Tables
+-------------------------------------------------- */
+.dropdown-menu {
+  /* We override the internal BS5 variables with our theme variables */
+  --bs-dropdown-bg: var(--body-bg-color);
+  --bs-dropdown-color: var(--text-color);
+  --bs-dropdown-border-color: var(--navbar-border-color);
+  --bs-dropdown-border-radius: 0;
+  
+  --bs-dropdown-link-color: var(--text-color);
+  --bs-dropdown-link-hover-color: var(--text-color);
+  --bs-dropdown-link-hover-bg: var(--tabbed-info-bg-color);
+  --bs-dropdown-link-active-color: #fff;
+  --bs-dropdown-link-active-bg: var(--search-button-bg-color);
+}
+
+/* Adjust the small triangle at the top of the dropdown (arrow) */
+.dropdown-menu::before {
+  display: none; /* If an arrow is present, we hide it for a flatter look */
+}
+
+.dropdown-divider {
+  border-top-color: var(--navbar-border-color);
+}
+
+/* Adapt table styling to your color variables */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--text-color);
+  --bs-table-hover-bg: var(--tabbed-info-bg-color);
+  --bs-table-hover-color: var(--text-color);
+  --bs-table-border-color: var(--navbar-border-color);
+}
+
+.table-info {
+  --bs-table-bg: var(--versions-table-bg-color-current) !important;
+  --bs-table-color: var(--text-color) !important;
+  --bs-table-border-color: var(--package-used-by-border-color) !important;
+}
+
+/* Index Page & Cards (Theme Support)
+-------------------------------------------------- */
+.card {
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--package-used-by-border-color);
+}
+
+.search-result .package-title {
+  color: var(--link-button-color); /* Uses your variable for links */
+}
+
+.search-result .package-title:hover {
+  text-decoration: underline !important;
+}
+
+/* Search Filters Form
+-------------------------------------------------- */
+/* Theme the filter buttons through the Bootstrap button variables so that
+   the hover, focus and open (.show) states all stay readable. */
+.search-options .btn-outline-secondary {
+  --bs-btn-color: var(--text-color);
+  --bs-btn-border-color: var(--control-border-color);
+  --bs-btn-hover-color: var(--text-color);
+  --bs-btn-hover-bg: var(--tabbed-info-bg-color);
+  --bs-btn-hover-border-color: var(--control-border-color);
+  --bs-btn-active-color: var(--text-color);
+  --bs-btn-active-bg: var(--tabbed-info-bg-color);
+  --bs-btn-active-border-color: var(--control-border-color);
+}
+
+/* Compact filter menus: the framework list is long and would otherwise
+   make the page about twice as tall when opened. */
+.search-options .dropdown-menu {
+  --bs-dropdown-font-size: 0.875rem;
+  --bs-dropdown-item-padding-y: 0.15rem;
+  --bs-dropdown-header-padding-y: 0.25rem;
+}
+
+/* Adjust checkbox in dark mode (Bootstrap 5 otherwise sets it to white) */
+@media (prefers-color-scheme: dark) {
+  .search-options .form-check-input {
+    background-color: var(--body-bg-color);
+    border-color: var(--control-border-color);
+  }
+  
+  .search-options .form-check-input:checked {
+    background-color: var(--search-button-bg-color);
+    border-color: var(--search-button-border-color);
+  }
 }
