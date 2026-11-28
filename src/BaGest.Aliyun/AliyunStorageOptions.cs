@@ -5,16 +5,16 @@ namespace BaGest.Aliyun;
 public class AliyunStorageOptions
 {
     [Required]
-    public string AccessKey { get; set; }
+    public string AccessKey { get; set; } = string.Empty;
 
     [Required]
-    public string AccessKeySecret { get; set; }
+    public string AccessKeySecret { get; set; } = string.Empty;
 
     [Required]
-    public string Endpoint { get; set; }
+    public string Endpoint { get; set; } = string.Empty;
 
     [Required]
-    public string Bucket { get; set; }
+    public string Bucket { get; set; } = string.Empty;
 
-    public string Prefix { get; set; }
+    public string Prefix { get; set; } = string.Empty;
 }

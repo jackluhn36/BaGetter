@@ -26,7 +26,7 @@ public static class AliyunApplicationExtensions
 
         app.Services.AddProvider<IStorageService>((provider, config) =>
         {
-            if (!config.HasStorageType("AliyunOss")) return null;
+            if (!config.HasStorageType("AliyunOss")) return new NullStorageService();
 
             return provider.GetRequiredService<AliyunStorageService>();
         });

@@ -32,7 +32,7 @@ public class AliyunStorageService : IStorageService
         return _prefix + path.Replace("\\", Separator);
     }
 
-    public async Task<Stream> GetAsync(string path, CancellationToken cancellationToken = default)
+    public async Task<Stream?> GetAsync(string path, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -47,11 +47,11 @@ public class AliyunStorageService : IStorageService
         }
     }
 
-    public Task<Uri> GetDownloadUriAsync(string path, CancellationToken cancellationToken = default)
+    public Task<Uri?> GetDownloadUriAsync(string path, CancellationToken cancellationToken = default)
     {
         var uri = _client.GeneratePresignedUri(_bucket, PrepareKey(path));
 
-        return Task.FromResult(uri);
+        return Task.FromResult<Uri?>(uri);
     }
 
     public async Task<StoragePutResult> PutAsync(string path, Stream content, string contentType, CancellationToken cancellationToken = default)
