@@ -11,7 +11,9 @@ public class StringArrayToJsonConverter : ValueConverter<string[], string>
     public StringArrayToJsonConverter()
         : base(
             v => JsonConvert.SerializeObject(v),
-            v => (!string.IsNullOrEmpty(v)) ? JsonConvert.DeserializeObject<string[]>(v) : Array.Empty<string>())
+            v => !string.IsNullOrEmpty(v)
+                ? JsonConvert.DeserializeObject<string[]>(v) ?? Array.Empty<string>()
+                : Array.Empty<string>())
     {
     }
 }

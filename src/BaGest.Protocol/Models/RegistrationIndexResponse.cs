@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -20,13 +21,13 @@ public class RegistrationIndexResponse
     /// The URL to the registration index.
     /// </summary>
     [JsonPropertyName("@id")]
-    public string RegistrationIndexUrl { get; set; }
+    public string RegistrationIndexUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// The registration index's type.
     /// </summary>
     [JsonPropertyName("@type")]
-    public IReadOnlyList<string> Type { get; set; }
+    public IReadOnlyList<string> Type { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// The number of registration pages. See <see cref="Pages"/>.
@@ -39,5 +40,5 @@ public class RegistrationIndexResponse
     /// by the package's version.
     /// </summary>
     [JsonPropertyName("items")]
-    public IReadOnlyList<RegistrationIndexPage> Pages { get; set; }
+    public IReadOnlyList<RegistrationIndexPage> Pages { get; set; } = Array.Empty<RegistrationIndexPage>();
 }

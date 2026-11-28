@@ -16,7 +16,7 @@ public class CatalogPageItem
     /// The URL to this item's corresponding <see cref="CatalogPage"/>.
     /// </summary>
     [JsonPropertyName("@id")]
-    public string CatalogPageUrl { get; set; }
+    public string CatalogPageUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// A timestamp of the most recent commit in this page.

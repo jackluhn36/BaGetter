@@ -184,8 +184,8 @@ public static class PackageArchiveReaderExtensions
             {
                 dependencies.Add(new PackageDependency
                 {
-                    Id = null,
-                    VersionRange = null,
+                    Id = string.Empty,
+                    VersionRange = string.Empty,
                     TargetFramework = targetFramework,
                 });
             }
@@ -195,7 +195,7 @@ public static class PackageArchiveReaderExtensions
                 dependencies.Add(new PackageDependency
                 {
                     Id = dependency.Id,
-                    VersionRange = dependency.VersionRange?.ToString(),
+                    VersionRange = dependency.VersionRange.ToString(),
                     TargetFramework = targetFramework,
                 });
             }

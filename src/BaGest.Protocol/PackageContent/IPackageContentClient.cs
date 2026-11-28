@@ -19,7 +19,7 @@ public interface IPackageContentClient
     /// <param name="packageId">The package ID.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package's versions, or null if the package does not exist.</returns>
-    Task<PackageVersionsResponse> GetPackageVersionsOrNullAsync(
+    public Task<PackageVersionsResponse?> GetPackageVersionsOrNullAsync(
         string packageId,
         CancellationToken cancellationToken = default);
 
@@ -33,7 +33,7 @@ public interface IPackageContentClient
     /// <returns>
     /// The package's content stream, or null if the package does not exist. The stream may not be seekable.
     /// </returns>
-    Task<Stream> DownloadPackageOrNullAsync(
+    public Task<Stream?> DownloadPackageOrNullAsync(
         string packageId,
         NuGetVersion packageVersion,
         CancellationToken cancellationToken = default);
@@ -48,7 +48,7 @@ public interface IPackageContentClient
     /// <returns>
     /// The package's manifest stream, or null if the package does not exist. The stream may not be seekable.
     /// </returns>
-    Task<Stream> DownloadPackageManifestOrNullAsync(
+    public Task<Stream?> DownloadPackageManifestOrNullAsync(
         string packageId,
         NuGetVersion packageVersion,
         CancellationToken cancellationToken = default);

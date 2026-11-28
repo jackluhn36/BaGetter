@@ -26,8 +26,8 @@ public class RawAutocompleteClient : IAutocompleteClient
         _autocompleteUrl = autocompleteUrl ?? throw new ArgumentNullException(nameof(autocompleteUrl));
     }
 
-    public async Task<AutocompleteResponse> AutocompleteAsync(
-        string query = null,
+    public async Task<AutocompleteResponse?> AutocompleteAsync(
+        string? query = null,
         int skip = 0,
         int take = 20,
         bool includePrerelease = true,
@@ -46,7 +46,7 @@ public class RawAutocompleteClient : IAutocompleteClient
         return await _httpClient.GetFromJsonAsync<AutocompleteResponse>(url, cancellationToken);
     }
 
-    public async Task<AutocompleteResponse> ListPackageVersionsAsync(
+    public async Task<AutocompleteResponse?> ListPackageVersionsAsync(
         string packageId,
         bool includePrerelease = true,
         bool includeSemVer2 = true,

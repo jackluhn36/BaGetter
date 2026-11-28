@@ -13,19 +13,12 @@ namespace BaGest.Protocol;
 /// </summary>
 public partial class NuGetClientFactory
 {
-    private readonly HttpClient? _httpClient;
-    private readonly string? _serviceIndexUrl;
+    private readonly HttpClient _httpClient;
+    public readonly string ServiceIndexUrl;
 
-    private readonly SemaphoreSlim? _mutex;
+    private readonly SemaphoreSlim _mutex;
     private NuGetClients? _clients;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NuGetClientFactory"/> class
-    /// for mocking.
-    /// </summary>
-    protected NuGetClientFactory()
-    {
-    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NuGetClientFactory"/> class.
@@ -36,10 +29,10 @@ public partial class NuGetClientFactory
     ///
     /// For NuGet.org, use https://api.nuget.org/v3/index.json
     /// </param>
-    public NuGetClientFactory(HttpClient httpClient, string? serviceIndexUrl)
+    public NuGetClientFactory(HttpClient? httpClient, string? serviceIndexUrl)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        _serviceIndexUrl = serviceIndexUrl ?? throw new ArgumentNullException(nameof(serviceIndexUrl));
+        ServiceIndexUrl = serviceIndexUrl ?? throw new ArgumentNullException(nameof(serviceIndexUrl));
 
         _mutex = new SemaphoreSlim(1, 1);
         _clients = null;
@@ -106,32 +99,32 @@ public partial class NuGetClientFactory
     }
 
 
-    private Task<ServiceIndexResponse> GetServiceIndexAsync(CancellationToken cancellationToken = default)
+    private Task<ServiceIndexResponse?> GetServiceIndexAsync(CancellationToken cancellationToken = default)
     {
         return GetAsync(c => c.ServiceIndex, cancellationToken);
     }
 
-    private Task<IPackageContentClient> GetPackageContentClientAsync(CancellationToken cancellationToken = default)
+    private Task<IPackageContentClient?> GetPackageContentClientAsync(CancellationToken cancellationToken = default)
     {
         return GetAsync(c => c.PackageContentClient, cancellationToken);
     }
 
-    private Task<IPackageMetadataClient> GetPackageMetadataClientAsync(CancellationToken cancellationToken = default)
+    private Task<IPackageMetadataClient?> GetPackageMetadataClientAsync(CancellationToken cancellationToken = default)
     {
         return GetAsync(c => c.PackageMetadataClient, cancellationToken);
     }
 
-    private Task<ISearchClient> GetSearchClientAsync(CancellationToken cancellationToken = default)
+    private Task<ISearchClient?> GetSearchClientAsync(CancellationToken cancellationToken = default)
     {
         return GetAsync(c => c.SearchClient, cancellationToken);
     }
 
-    private Task<IAutocompleteClient> GetAutocompleteClientAsync(CancellationToken cancellationToken = default)
+    private Task<IAutocompleteClient?> GetAutocompleteClientAsync(CancellationToken cancellationToken = default)
     {
         return GetAsync(c => c.AutocompleteClient, cancellationToken);
     }
 
-    private Task<ICatalogClient> GetCatalogClientAsync(CancellationToken cancellationToken = default)
+    private Task<ICatalogClient?> GetCatalogClientAsync(CancellationToken cancellationToken = default)
     {
         return GetAsync(c => c.CatalogClient, cancellationToken);
     }
@@ -146,10 +139,11 @@ public partial class NuGetClientFactory
             {
                 if (_clients == null)
                 {
-                    var serviceIndexClient = new RawServiceIndexClient(_httpClient, _serviceIndexUrl);
+                    var serviceIndexClient = new RawServiceIndexClient(_httpClient, ServiceIndexUrl);
 
                     var serviceIndex = await serviceIndexClient.GetAsync(cancellationToken);
-
+                    if (serviceIndex is null) throw new InvalidOperationException("The NuGet service index could not be loaded.");
+                                        
                     var contentResourceUrl = serviceIndex.GetPackageContentResourceUrl();
                     var metadataResourceUrl = serviceIndex.GetPackageMetadataResourceUrl();
                     var catalogResourceUrl = serviceIndex.GetCatalogResourceUrl();

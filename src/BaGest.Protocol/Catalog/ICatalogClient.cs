@@ -17,7 +17,7 @@ public interface ICatalogClient
     /// <remarks>See: <see href="https://docs.microsoft.com/en-us/nuget/api/catalog-resource#catalog-index"/></remarks>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The catalog index.</returns>
-    Task<CatalogIndex> GetIndexAsync(CancellationToken cancellationToken = default);
+    public Task<CatalogIndex?> GetIndexAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a single catalog page, used to discover catalog leafs.
@@ -26,7 +26,7 @@ public interface ICatalogClient
     /// <param name="pageUrl">The URL of the page, from the <see cref="CatalogIndex"/>.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>A catalog page.</returns>
-    Task<CatalogPage> GetPageAsync(
+    public Task<CatalogPage?> GetPageAsync(
         string pageUrl,
         CancellationToken cancellationToken = default);
 
@@ -37,7 +37,7 @@ public interface ICatalogClient
     /// <param name="leafUrl">The URL of the leaf, from a <see cref="CatalogPage"/>.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>A catalog leaf.</returns>
-    Task<PackageDeleteCatalogLeaf> GetPackageDeleteLeafAsync(
+    public Task<PackageDeleteCatalogLeaf?> GetPackageDeleteLeafAsync(
         string leafUrl,
         CancellationToken cancellationToken = default);
 
@@ -48,7 +48,7 @@ public interface ICatalogClient
     /// <param name="leafUrl">The URL of the leaf, from a <see cref="CatalogPage"/>.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>A catalog leaf.</returns>
-    Task<PackageDetailsCatalogLeaf> GetPackageDetailsLeafAsync(
+    public Task<PackageDetailsCatalogLeaf?> GetPackageDetailsLeafAsync(
         string leafUrl,
         CancellationToken cancellationToken = default);
 }

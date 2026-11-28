@@ -15,7 +15,7 @@ public class PackageDependency
     /// <summary>
     /// The dependency's package version. Null if this is a dependency group without any dependencies.
     /// </summary>
-    public string? VersionRange { get; set; } = null;
+    public string VersionRange { get; set; } = string.Empty;
 
     public string TargetFramework { get; set; } = string.Empty;
 

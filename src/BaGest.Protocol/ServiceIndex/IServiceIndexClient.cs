@@ -15,5 +15,5 @@ public interface IServiceIndexClient
     /// </summary>
     /// <remarks>See: <see href="https://docs.microsoft.com/en-us/nuget/api/service-index#resources"/></remarks>
     /// <returns>The resources available on this package feed.</returns>
-    Task<ServiceIndexResponse> GetAsync(CancellationToken cancellationToken = default);
+    public Task<ServiceIndexResponse?> GetAsync(CancellationToken cancellationToken = default);
 }

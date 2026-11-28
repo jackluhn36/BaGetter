@@ -16,8 +16,8 @@ public partial class NuGetClientFactory
             _clientfactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
         }
 
-        public async Task<AutocompleteResponse> AutocompleteAsync(
-            string query = null,
+        public async Task<AutocompleteResponse?> AutocompleteAsync(
+            string? query = null,
             int skip = 0,
             int take = 20,
             bool includePrerelease = true,
@@ -28,10 +28,12 @@ public partial class NuGetClientFactory
             // See: https://github.com/loic-sharma/BaGet/issues/314
             var client = await _clientfactory.GetAutocompleteClientAsync(cancellationToken);
 
-            return await client.AutocompleteAsync(query, skip, take, includePrerelease, includeSemVer2, cancellationToken);
+            return client is null
+                ? null
+                : await client.AutocompleteAsync(query, skip, take, includePrerelease, includeSemVer2, cancellationToken);
         }
 
-        public async Task<AutocompleteResponse> ListPackageVersionsAsync(
+        public async Task<AutocompleteResponse?> ListPackageVersionsAsync(
             string packageId,
             bool includePrerelease = true,
             bool includeSemVer2 = true,
@@ -41,7 +43,9 @@ public partial class NuGetClientFactory
             // See: https://github.com/loic-sharma/BaGet/issues/314
             var client = await _clientfactory.GetAutocompleteClientAsync(cancellationToken);
 
-            return await client.ListPackageVersionsAsync(packageId, includePrerelease, includeSemVer2, cancellationToken);
+            return client is null
+                ? null
+                : await client.ListPackageVersionsAsync(packageId, includePrerelease, includeSemVer2, cancellationToken);
         }
     }
 }

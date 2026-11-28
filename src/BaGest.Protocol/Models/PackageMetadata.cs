@@ -15,31 +15,31 @@ public class PackageMetadata
     /// The URL to the document used to produce this object.
     /// </summary>
     [JsonPropertyName("@id")]
-    public string CatalogLeafUrl { get; set; }
+    public string CatalogLeafUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// The ID of the package.
     /// </summary>
     [JsonPropertyName("id")]
-    public string PackageId { get; set; }
+    public string PackageId { get; set; } = string.Empty;
 
     /// <summary>
     /// The full NuGet version after normalization, including any SemVer 2.0.0 build metadata.
     /// </summary>
     [JsonPropertyName("version")]
-    public string Version { get; set; }
+    public string Version { get; set; } = string.Empty;
 
     /// <summary>
     /// The package's authors.
     /// </summary>
     [JsonPropertyName("authors")]
-    public string Authors { get; set; }
+    public string Authors { get; set; } = string.Empty;
 
     /// <summary>
     /// The dependencies of the package, grouped by target framework.
     /// </summary>
     [JsonPropertyName("dependencyGroups")]
-    public IReadOnlyList<DependencyGroupItem> DependencyGroups { get; set; }
+    public IReadOnlyList<DependencyGroupItem> DependencyGroups { get; set; } = Array.Empty<DependencyGroupItem>();
 
     /// <summary>
     /// The deprecation associated with the package, if any.
@@ -51,13 +51,13 @@ public class PackageMetadata
     /// The package's description.
     /// </summary>
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     /// <summary>
     /// The URL to the package's icon.
     /// </summary>
     [JsonPropertyName("iconUrl")]
-    public string IconUrl { get; set; }
+    public string IconUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// The package's language.
@@ -69,7 +69,7 @@ public class PackageMetadata
     /// The URL to the package's license.
     /// </summary>
     [JsonPropertyName("licenseUrl")]
-    public string LicenseUrl { get; set; }
+    public string LicenseUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// Whether the package is listed in search results.
@@ -88,13 +88,13 @@ public class PackageMetadata
     /// The URL to download the package's content.
     /// </summary>
     [JsonPropertyName("packageContent")]
-    public string PackageContentUrl { get; set; }
+    public string PackageContentUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// The URL for the package's home page.
     /// </summary>
     [JsonPropertyName("projectUrl")]
-    public string ProjectUrl { get; set; }
+    public string ProjectUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// The package's publish date.
@@ -112,7 +112,7 @@ public class PackageMetadata
     /// The package's summary.
     /// </summary>
     [JsonPropertyName("summary")]
-    public string Summary { get; set; }
+    public string? Summary { get; set; }
 
     /// <summary>
     /// The package's tags.

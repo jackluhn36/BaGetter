@@ -24,14 +24,6 @@ public class NuGetClient
     public string ServiceIndexUrl { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NuGetClient"/> class
-    /// for mocking.
-    /// </summary>
-    protected NuGetClient()
-    {
-    }
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="NuGetClient"/> class.
     /// </summary>
     /// <param name="serviceIndexUrl">
@@ -67,6 +59,7 @@ public class NuGetClient
         _metadataClient = clientFactory.CreatePackageMetadataClient();
         _searchClient = clientFactory.CreateSearchClient();
         _autocompleteClient = clientFactory.CreateAutocompleteClient();
+        ServiceIndexUrl = clientFactory.ServiceIndexUrl;
     }
 
     /// <summary>
@@ -313,13 +306,13 @@ public class NuGetClient
     /// </param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The search results, including prerelease packages.</returns>
-    public virtual async Task<IReadOnlyList<SearchResult>> SearchAsync(
-        string query = null,
+    public virtual async Task<IReadOnlyList<SearchResult>?> SearchAsync(
+        string? query = null,
         CancellationToken cancellationToken = default)
     {
         var response = await _searchClient.SearchAsync(query, cancellationToken: cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -332,7 +325,7 @@ public class NuGetClient
     /// <param name="take">The number of results to include.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The search results, including prerelease packages.</returns>
-    public virtual async Task<IReadOnlyList<SearchResult>> SearchAsync(
+    public virtual async Task<IReadOnlyList<SearchResult>?> SearchAsync(
         string query,
         int skip,
         int take,
@@ -346,7 +339,7 @@ public class NuGetClient
             includeSemVer2: true,
             cancellationToken: cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -358,7 +351,7 @@ public class NuGetClient
     /// <param name="includePrerelease">Whether to include prerelease packages.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The search results.</returns>
-    public virtual async Task<IReadOnlyList<SearchResult>> SearchAsync(
+    public virtual async Task<IReadOnlyList<SearchResult>?> SearchAsync(
         string query,
         bool includePrerelease,
         CancellationToken cancellationToken = default)
@@ -368,7 +361,7 @@ public class NuGetClient
             includePrerelease: includePrerelease,
             cancellationToken: cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -382,7 +375,7 @@ public class NuGetClient
     /// <param name="includePrerelease">Whether to include prerelease packages.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The search results, including prerelease packages.</returns>
-    public virtual async Task<IReadOnlyList<SearchResult>> SearchAsync(
+    public virtual async Task<IReadOnlyList<SearchResult>?> SearchAsync(
         string query,
         int skip,
         int take,
@@ -397,7 +390,7 @@ public class NuGetClient
             includeSemVer2: true,
             cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -408,13 +401,13 @@ public class NuGetClient
     /// </param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package IDs that matched the query.</returns>
-    public virtual async Task<IReadOnlyList<string>> AutocompleteAsync(
-        string query = null,
+    public virtual async Task<IReadOnlyList<string>?> AutocompleteAsync(
+        string? query = null,
         CancellationToken cancellationToken = default)
     {
         var response = await _autocompleteClient.AutocompleteAsync(query, cancellationToken: cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -427,7 +420,7 @@ public class NuGetClient
     /// <param name="take">The number of results to include.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package IDs that matched the query.</returns>
-    public virtual async Task<IReadOnlyList<string>> AutocompleteAsync(
+    public virtual async Task<IReadOnlyList<string>?> AutocompleteAsync(
         string query,
         int skip,
         int take,
@@ -441,7 +434,7 @@ public class NuGetClient
             includeSemVer2: true,
             cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -453,7 +446,7 @@ public class NuGetClient
     /// <param name="includePrerelease">Whether to include prerelease packages.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package IDs that matched the query.</returns>
-    public virtual async Task<IReadOnlyList<string>> AutocompleteAsync(
+    public virtual async Task<IReadOnlyList<string>?> AutocompleteAsync(
         string query,
         bool includePrerelease,
         CancellationToken cancellationToken = default)
@@ -463,7 +456,7 @@ public class NuGetClient
             includePrerelease: includePrerelease,
             cancellationToken: cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 
     /// <summary>
@@ -477,7 +470,7 @@ public class NuGetClient
     /// <param name="includePrerelease">Whether to include prerelease packages.</param>
     /// <param name="cancellationToken">A token to cancel the task.</param>
     /// <returns>The package IDs that matched the query.</returns>
-    public virtual async Task<IReadOnlyList<string>> AutocompleteAsync(
+    public virtual async Task<IReadOnlyList<string>?> AutocompleteAsync(
         string query,
         int skip,
         int take,
@@ -492,6 +485,6 @@ public class NuGetClient
             includeSemVer2: true,
             cancellationToken);
 
-        return response.Data;
+        return response?.Data;
     }
 }

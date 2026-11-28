@@ -212,8 +212,8 @@ public class V2UpstreamClient : IUpstreamClient, IDisposable
             {
                 new PackageDependency
                 {
-                    Id = null,
-                    VersionRange = null,
+                    Id = string.Empty,
+                    VersionRange = string.Empty,
                     TargetFramework = framework,
                 }
             };

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ namespace BaGest.Protocol.Models;
 public class AutocompleteResponse
 {
     [JsonPropertyName("@context")]
-    public AutocompleteContext Context { get; set; }
+    public AutocompleteContext? Context { get; set; }
 
     /// <summary>
     /// The total number of matches, disregarding skip and take.
@@ -22,5 +23,5 @@ public class AutocompleteResponse
     /// The package IDs matched by the autocomplete query.
     /// </summary>
     [JsonPropertyName("data")]
-    public IReadOnlyList<string> Data { get; set; }
+    public IReadOnlyList<string> Data { get; set; } = Array.Empty<string>();
 }

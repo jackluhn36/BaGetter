@@ -22,7 +22,7 @@ public class RawPackageContentClient : IPackageContentClient
     /// </summary>
     /// <param name="httpClient">The HTTP client used to send requests.</param>
     /// <param name="packageContentUrl">The NuGet Server's package content URL.</param>
-    public RawPackageContentClient(HttpClient httpClient, string packageContentUrl)
+    public RawPackageContentClient(HttpClient httpClient, string? packageContentUrl)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _packageContentUrl = packageContentUrl?.TrimEnd('/')
@@ -30,7 +30,7 @@ public class RawPackageContentClient : IPackageContentClient
     }
 
     /// <inheritdoc />
-    public async Task<PackageVersionsResponse> GetPackageVersionsOrNullAsync(
+    public async Task<PackageVersionsResponse?> GetPackageVersionsOrNullAsync(
         string packageId,
         CancellationToken cancellationToken = default)
     {
@@ -41,7 +41,7 @@ public class RawPackageContentClient : IPackageContentClient
     }
 
     /// <inheritdoc />
-    public async Task<Stream> DownloadPackageOrNullAsync(
+    public async Task<Stream?> DownloadPackageOrNullAsync(
         string packageId,
         NuGetVersion packageVersion,
         CancellationToken cancellationToken = default)
@@ -62,7 +62,7 @@ public class RawPackageContentClient : IPackageContentClient
     }
 
     /// <inheritdoc />
-    public async Task<Stream> DownloadPackageManifestOrNullAsync(
+    public async Task<Stream?> DownloadPackageManifestOrNullAsync(
         string packageId,
         NuGetVersion packageVersion,
         CancellationToken cancellationToken = default)

@@ -67,6 +67,8 @@ public class CatalogProcessor
     {
         var index = await _client.GetIndexAsync(cancellationToken);
 
+        if(index == null) return false;
+
         var pageItems = index.GetPagesInBounds(
             minCommitTimestamp,
             _options.MaxCommitTimestamp);
@@ -99,6 +101,8 @@ public class CatalogProcessor
     {
         var page = await _client.GetPageAsync(pageItem.CatalogPageUrl, cancellationToken);
 
+        if(page == null) return false;
+        
         var leafItems = page.GetLeavesInBounds(
             minCommitTimestamp,
             _options.MaxCommitTimestamp,
@@ -149,11 +153,19 @@ public class CatalogProcessor
             if (leafItem.IsPackageDelete())
             {
                 var packageDelete = await _client.GetPackageDeleteLeafAsync(leafItem.CatalogLeafUrl, cancellationToken);
+                
+                //TODO: Revisit
+                if(packageDelete == null) return false;
+        
                 success = await _leafProcessor.ProcessPackageDeleteAsync(packageDelete, cancellationToken);
             }
             else if (leafItem.IsPackageDetails())
             {
                 var packageDetails = await _client.GetPackageDetailsLeafAsync(leafItem.CatalogLeafUrl, cancellationToken);
+                
+                //TODO: Revisit
+                if(packageDetails == null) return false;
+
                 success = await _leafProcessor.ProcessPackageDetailsAsync(packageDetails, cancellationToken);
             }
             else

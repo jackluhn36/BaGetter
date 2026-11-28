@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -13,11 +14,11 @@ public class ServiceIndexResponse
     /// The service index's version.
     /// </summary>
     [JsonPropertyName("version")]
-    public string Version { get; set; }
+    public string Version { get; set; } = string.Empty;
 
     /// <summary>
     /// The resources declared by this service index.
     /// </summary>
     [JsonPropertyName("resources")]
-    public IReadOnlyList<ServiceIndexItem> Resources { get; set; }
+    public IReadOnlyList<ServiceIndexItem> Resources { get; set; }  = Array.Empty<ServiceIndexItem>();
 }

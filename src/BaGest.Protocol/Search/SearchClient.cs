@@ -16,8 +16,8 @@ public partial class NuGetClientFactory
             _clientfactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
         }
 
-        public async Task<SearchResponse> SearchAsync(
-            string query = null,
+        public async Task<SearchResponse?> SearchAsync(
+            string? query = null,
             int skip = 0,
             int take = 20,
             bool includePrerelease = true,
@@ -28,7 +28,7 @@ public partial class NuGetClientFactory
             // See: https://github.com/loic-sharma/BaGet/issues/314
             var client = await _clientfactory.GetSearchClientAsync(cancellationToken);
 
-            return await client.SearchAsync(query, skip, take, includePrerelease, includeSemVer2, cancellationToken);
+            return client is null ? null : await client.SearchAsync(query, skip, take, includePrerelease, includeSemVer2, cancellationToken);
         }
     }
 }

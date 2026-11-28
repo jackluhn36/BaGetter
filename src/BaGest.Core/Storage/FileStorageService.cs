@@ -21,7 +21,7 @@ public class FileStorageService : IStorageService
         ArgumentNullException.ThrowIfNull(options);
 
         // Resolve relative path components ('.'/'..') and ensure there is a trailing slash.
-        _storePath = Path.GetFullPath(options.Value.Path);
+        _storePath = Path.GetFullPath(options!.Value.Path);
         if (!_storePath.EndsWith(Path.DirectorySeparatorChar.ToString()))
             _storePath += Path.DirectorySeparatorChar;
     }

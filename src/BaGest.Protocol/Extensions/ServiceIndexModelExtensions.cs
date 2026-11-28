@@ -32,39 +32,39 @@ public static class ServiceIndexModelExtensions
     private static readonly string[] RepositorySignatures = { "RepositorySignatures" + Version500, "RepositorySignatures" + Version490, "RepositorySignatures" + Version470 };
     private static readonly string[] SymbolPackagePublish = { "SymbolPackagePublish" + Version490 };
 
-    public static string GetPackageContentResourceUrl(this ServiceIndexResponse serviceIndex)
+    public static string? GetPackageContentResourceUrl(this ServiceIndexResponse serviceIndex)
     {
         return serviceIndex.GetRequiredResourceUrl(PackageBaseAddress, nameof(PackageBaseAddress));
     }
 
-    public static string GetPackageMetadataResourceUrl(this ServiceIndexResponse serviceIndex)
+    public static string? GetPackageMetadataResourceUrl(this ServiceIndexResponse serviceIndex)
     {
         return serviceIndex.GetRequiredResourceUrl(RegistrationsBaseUrl, nameof(RegistrationsBaseUrl));
     }
 
-    public static string GetSearchQueryResourceUrl(this ServiceIndexResponse serviceIndex)
+    public static string? GetSearchQueryResourceUrl(this ServiceIndexResponse serviceIndex)
     {
         return serviceIndex.GetRequiredResourceUrl(SearchQueryService, nameof(SearchQueryService));
     }
 
-    public static string GetCatalogResourceUrl(this ServiceIndexResponse serviceIndex)
+    public static string? GetCatalogResourceUrl(this ServiceIndexResponse serviceIndex)
     {
         return serviceIndex.GetResourceUrl(Catalog);
     }
 
-    public static string GetSearchAutocompleteResourceUrl(this ServiceIndexResponse serviceIndex)
+    public static string? GetSearchAutocompleteResourceUrl(this ServiceIndexResponse serviceIndex)
     {
         return serviceIndex.GetResourceUrl(SearchAutocompleteService);
     }
 
-    public static string GetResourceUrl(this ServiceIndexResponse serviceIndex, string[] types)
+    public static string? GetResourceUrl(this ServiceIndexResponse serviceIndex, string[] types)
     {
         var resource = types.SelectMany(t => serviceIndex.Resources.Where(r => r.Type == t)).FirstOrDefault();
 
         return resource?.ResourceUrl.Trim('/');
     }
 
-    public static string GetRequiredResourceUrl(this ServiceIndexResponse serviceIndex, string[] types, string resourceName)
+    public static string? GetRequiredResourceUrl(this ServiceIndexResponse serviceIndex, string[] types, string resourceName)
     {
         // For more information on required resources,
         // see: https://docs.microsoft.com/en-us/nuget/api/overview#resources-and-schema

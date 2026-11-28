@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ namespace BaGest.Protocol.Models;
 public class SearchResponse
 {
     [JsonPropertyName("@context")]
-    public SearchContext Context { get; set; }
+    public SearchContext? Context { get; set; }
 
     /// <summary>
     /// The total number of matches, disregarding skip and take.
@@ -22,5 +23,5 @@ public class SearchResponse
     /// The packages that matched the search query.
     /// </summary>
     [JsonPropertyName("data")]
-    public IReadOnlyList<SearchResult> Data { get; set; }
+    public IReadOnlyList<SearchResult> Data { get; set; } = Array.Empty<SearchResult>();
 }

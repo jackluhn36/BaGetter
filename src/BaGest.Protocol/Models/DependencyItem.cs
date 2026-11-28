@@ -20,5 +20,5 @@ public class DependencyItem
     /// </summary>
     [JsonPropertyName("range")]
     [JsonConverter(typeof(PackageDependencyRangeJsonConverter))]
-    public string? Range { get; set; }
+    public string Range { get; set; } = string.Empty;
 }

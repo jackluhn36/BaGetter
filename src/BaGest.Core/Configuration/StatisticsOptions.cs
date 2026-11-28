@@ -11,6 +11,6 @@ public class StatisticsOptions : IValidatableObject
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        yield return ValidationResult.Success;
+        yield return ValidationResult.Success!;
     }
 }

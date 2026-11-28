@@ -143,7 +143,7 @@ public class V3UpstreamClient : IUpstreamClient
         return authors.Split(AuthorSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
     }
 
-    private static string[] ParseTags(IEnumerable<string> tags)
+    private static string[] ParseTags(IEnumerable<string>? tags)
     {
         if (tags is null)
         {
@@ -178,7 +178,7 @@ public class V3UpstreamClient : IUpstreamClient
                 new PackageDependency
                 {
                     Id = null,
-                    VersionRange = null,
+                    VersionRange = string.Empty,
                     TargetFramework = group.TargetFramework,
                 }
             };

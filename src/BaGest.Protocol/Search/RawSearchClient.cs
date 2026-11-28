@@ -22,14 +22,14 @@ public class RawSearchClient : ISearchClient
     /// </summary>
     /// <param name="httpClient">The HTTP client used to send requests.</param>
     /// <param name="searchUrl">The NuGet server's search URL.</param>
-    public RawSearchClient(HttpClient httpClient, string searchUrl)
+    public RawSearchClient(HttpClient httpClient, string? searchUrl)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _searchUrl = searchUrl ?? throw new ArgumentNullException(nameof(searchUrl));
     }
 
-    public async Task<SearchResponse> SearchAsync(
-        string query = null,
+    public async Task<SearchResponse?> SearchAsync(
+        string? query = null,
         int skip = 0,
         int take = 20,
         bool includePrerelease = true,
@@ -43,7 +43,7 @@ public class RawSearchClient : ISearchClient
 
     internal static string AddSearchQueryString(
         string uri,
-        string query,
+        string? query,
         int? skip,
         int? take,
         bool includePrerelease,
@@ -59,7 +59,7 @@ public class RawSearchClient : ISearchClient
 
         if (!string.IsNullOrEmpty(query))
         {
-            queryString[queryParamName] = query;
+            queryString[queryParamName] = query!;
         }
 
         return AddQueryString(uri, queryString);

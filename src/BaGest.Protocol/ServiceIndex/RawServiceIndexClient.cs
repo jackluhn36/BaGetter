@@ -27,7 +27,7 @@ public class RawServiceIndexClient : IServiceIndexClient
     }
 
     /// <inheritdoc />
-    public async Task<ServiceIndexResponse> GetAsync(CancellationToken cancellationToken = default)
+    public async Task<ServiceIndexResponse?> GetAsync(CancellationToken cancellationToken = default)
     {
         return await _httpClient.GetFromJsonAsync<ServiceIndexResponse>(
             _serviceIndexUrl,

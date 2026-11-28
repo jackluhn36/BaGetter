@@ -18,33 +18,33 @@ public partial class NuGetClientFactory
             _clientfactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
         }
 
-        public async Task<Stream> DownloadPackageOrNullAsync(
+        public async Task<Stream?> DownloadPackageOrNullAsync(
             string packageId,
             NuGetVersion packageVersion,
             CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetPackageContentClientAsync(cancellationToken);
 
-            return await client.DownloadPackageOrNullAsync(packageId, packageVersion, cancellationToken);
+            return client is null ? null : await client.DownloadPackageOrNullAsync(packageId, packageVersion, cancellationToken);
         }
 
-        public async Task<Stream> DownloadPackageManifestOrNullAsync(
+        public async Task<Stream?> DownloadPackageManifestOrNullAsync(
             string packageId,
             NuGetVersion packageVersion,
             CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetPackageContentClientAsync(cancellationToken);
 
-            return await client.DownloadPackageManifestOrNullAsync(packageId, packageVersion, cancellationToken);
+            return client is null ? null : await client.DownloadPackageManifestOrNullAsync(packageId, packageVersion, cancellationToken);
         }
 
-        public async Task<PackageVersionsResponse> GetPackageVersionsOrNullAsync(
+        public async Task<PackageVersionsResponse?> GetPackageVersionsOrNullAsync(
             string packageId,
             CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetPackageContentClientAsync(cancellationToken);
 
-            return await client.GetPackageVersionsOrNullAsync(packageId, cancellationToken);
+            return client is null ? null : await client.GetPackageVersionsOrNullAsync(packageId, cancellationToken);
         }
     }
 }

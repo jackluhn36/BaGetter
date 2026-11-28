@@ -44,7 +44,7 @@ public static partial class DependencyInjectionExtensions
     /// <returns>The dependency injection container.</returns>
     public static IServiceCollection AddBaGestOptions<TOptions>(
         this IServiceCollection services,
-        string key = null)
+        string? key = null)
         where TOptions : class
     {
         services.AddSingleton<IValidateOptions<TOptions>>(new ValidateBaGestOptions<TOptions>(key));

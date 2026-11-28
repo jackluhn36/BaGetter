@@ -12,7 +12,7 @@ public class FileSystemStorageOptions : IValidatableObject
     /// as the main BaGest executable. This path will be created if it does not
     /// exist at startup. Packages will be stored in a subfolder named "packages".
     /// </summary>
-    public string Path { get; set; }
+    public string Path { get; set; } = string.Empty;
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

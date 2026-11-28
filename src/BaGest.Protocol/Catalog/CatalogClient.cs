@@ -16,32 +16,40 @@ public partial class NuGetClientFactory
             _clientfactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
         }
 
-        public async Task<CatalogIndex> GetIndexAsync(CancellationToken cancellationToken = default)
+        public async Task<CatalogIndex?> GetIndexAsync(CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetCatalogClientAsync(cancellationToken);
 
-            return await client.GetIndexAsync(cancellationToken);
+            return client is null
+                ? null
+                : await client.GetIndexAsync(cancellationToken);
         }
 
-        public async Task<CatalogPage> GetPageAsync(string pageUrl, CancellationToken cancellationToken = default)
+        public async Task<CatalogPage?> GetPageAsync(string pageUrl, CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetCatalogClientAsync(cancellationToken);
 
-            return await client.GetPageAsync(pageUrl, cancellationToken);
+            return client is null
+                ? null
+                : await client.GetPageAsync(pageUrl, cancellationToken) ?? null;
         }
 
-        public async Task<PackageDetailsCatalogLeaf> GetPackageDetailsLeafAsync(string leafUrl, CancellationToken cancellationToken = default)
+        public async Task<PackageDetailsCatalogLeaf?> GetPackageDetailsLeafAsync(string leafUrl, CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetCatalogClientAsync(cancellationToken);
 
-            return await client.GetPackageDetailsLeafAsync(leafUrl, cancellationToken);
+            return client is null
+                ? null
+                : await client.GetPackageDetailsLeafAsync(leafUrl, cancellationToken);
         }
 
-        public async Task<PackageDeleteCatalogLeaf> GetPackageDeleteLeafAsync(string leafUrl, CancellationToken cancellationToken = default)
+        public async Task<PackageDeleteCatalogLeaf?> GetPackageDeleteLeafAsync(string leafUrl, CancellationToken cancellationToken = default)
         {
             var client = await _clientfactory.GetCatalogClientAsync(cancellationToken);
 
-            return await client.GetPackageDeleteLeafAsync(leafUrl, cancellationToken);
+            return client is null
+                ? null
+                : await client.GetPackageDeleteLeafAsync(leafUrl, cancellationToken);
         }
     }
 }

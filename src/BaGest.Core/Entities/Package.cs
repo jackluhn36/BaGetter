@@ -44,8 +44,8 @@ public class Package
     public DateTime Published { get; set; }
     public bool RequireLicenseAcceptance { get; set; }
     public SemVerLevel SemVerLevel { get; set; }
-    public string Summary { get; set; } = string.Empty;
-    public string Title { get; set; } = string.Empty;
+    public string? Summary { get; set; }
+    public string? Title { get; set; }
 
     public Uri? IconUrl { get; set; }
     public Uri? LicenseUrl { get; set; }
